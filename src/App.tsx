@@ -15,7 +15,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/rmbdeal' element={<Home />} />
+        <Route path='/rmbdeals' element={<Home />} />
         <Route path='/buy' element={<Unknown />} />
         <Route path='/checkout' element={<Checkout />} />
         <Route path='/login' element={<Login />} />
