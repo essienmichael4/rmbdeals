@@ -3,7 +3,7 @@ import { X } from "lucide-react"
 const Order = () => {
   return (
     <>
-        <div className="mb-12">
+        <div className="mb-12 px-4 lg:px-0">
             <div className="flex items-center gap-4">
                 <h4 className="text-3xl font-semibold mb-2">Order ID: #10001</h4>
                 <span className="px-4 py-1 rounded-full bg-emerald-100 text-emerald-600 text-xs">Completed</span>

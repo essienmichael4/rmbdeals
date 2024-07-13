@@ -19,8 +19,8 @@ const InAppHeader = () => {
                 <NavLink to={"account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
             </div>
             <div className='flex gap-2 md:gap-4 items-center'>
-                <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"/"}>Buy</Link>
-                <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium' to={"/"}>Logout</Link>
+                <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../buy"}>Buy</Link>
+                <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium' to={"../"}>Logout</Link>
                 <div className="lg:hidden md:flex flex-col items-center justify-end">
                   <button onClick={toggleNavbar}>{mobileDrawerOpen ? <X /> : <Menu />}</button>
                 </div>

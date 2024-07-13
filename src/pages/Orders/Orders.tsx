@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const Orders = () => {
   return (
     <>
-        <div>
+        <div className="mb-12 px-4 lg:px-0">
             <h4 className="text-3xl font-semibold mb-4">Your orders</h4>
             <hr />
             <div className='h-2 w-96 relative hidden lg:block bg-[#FFDD66] -top-1'></div>

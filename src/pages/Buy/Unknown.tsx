@@ -148,7 +148,7 @@ const Unknown = () => {
                                 </FormItem>
                             )}
                         />
-                        <Button className='mt-4'>Continue to checkout</Button>
+                        <Link to={'../checkout'} className='mt-4'>Continue to checkout</Link>
                     </div>
                 </form>
             </Form>
