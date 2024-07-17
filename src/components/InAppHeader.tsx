@@ -12,7 +12,7 @@ const InAppHeader = () => {
   return (
     <header className='w-full sticky top-0 border-b bg-white z-50'>
         <nav className="container px-4 py-8 lg:py-0 lg:px-0 mx-auto flex justify-between items-center">
-            <h1 className='text-3xl font-bold sm:text-black'>BUY RMB</h1>
+            <h1 className='text-3xl font-bold sm:text-black'>RMB Deals</h1>
             <div className='hidden lg:flex gap-8 h-full items-center'>
                 <NavLink to={"dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
                 <NavLink to={"orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>

@@ -12,7 +12,7 @@ const Hero = () => {
                 <Link to={"/buy"} className='py-3 px-8 rounded-full bg-black text-white'>Buy</Link>
             </div>
         </div>
-        <div className='absolute w-full left-0 lg:left-20 -z-10 sm:relative sm:rounded-lg lg:rounded-none lg:-right-20 lg:w-[60%] h-full bg-slate-500 flex bg-cover bg-center' style={{backgroundImage:`url(${hero})`}}>
+        <div className='absolute w-full top-0 left-0 lg:left-20 -z-10 sm:relative sm:rounded-lg lg:rounded-none lg:-right-20 lg:w-[60%] h-full bg-slate-500 flex bg-cover bg-center' style={{backgroundImage:`url(${hero})`}}>
             <div className="overlay w-full h-full bg-black opacity-30 sm:hidden"></div>
         </div>
     </div>

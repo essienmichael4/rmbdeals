@@ -10,27 +10,30 @@ import Account from './pages/Account/Account'
 import Order from './pages/Orders/Order'
 import Unknown from './pages/Buy/Unknown'
 import Checkout from './pages/Checkout/Checkout'
+import Whatsapp from './components/Whatsapp'
 
 function App() {
   return (
     <>
       <Routes>
-        <Route path='/rmbdeals' element={<Home />} />
-        <Route path='/rmbdeals/buy' element={<Unknown />} />
-        <Route path='/rmbdeals/checkout' element={<Checkout />} />
-        <Route path='/rmbdeals/login' element={<Login />} />
-        <Route path='/rmbdeals/register' element={<Register />} />
-        <Route element={<Layout />}>
-          <Route path='/rmbdeals/dashboard' element={<Dashboard />} />
-          <Route path='/rmbdeals/orders' element={<Orders />} />
-          <Route path='/rmbdeals/orders/:id' element={<Order />} />
-          <Route path='/rmbdeals/account' element={<Account />} />
-        </Route> 
+        <Route element={<Whatsapp />}>
+          <Route path='/rmbdeals' element={<Home />} />
+          <Route path='/buy' element={<Unknown />} />
+          <Route path='/checkout' element={<Checkout />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route element={<Layout />}>
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='orders' element={<Orders />} />
+            <Route path='orders/:id' element={<Order />} />
+            <Route path='account' element={<Account />} />
+          </Route> 
          {/* <Route element={< />}> */}
         //     <Route path=''>
         //       {/* <Route path="dashboard" element={<Dashboard/>} /> */}
         //     </Route>
          {/* </Route> */}
+         </Route>
       </Routes>
     </>
   )
