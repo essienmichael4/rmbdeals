@@ -4,7 +4,7 @@ import hero from '../assets/hero.jpg'
 const Hero = () => {
   return (
     <div className='h-screen max-h-[800px] flex items-center justify-between sm:flex-col lg:flex-row'>
-        <div className='w-full lg:w-[40%] px-4 lg:px-0 h-full sm:h-[50%] sm:mt-36 flex flex-col justify-end lg:justify-center gap-4 pb-8 lg:pb-0'>
+        <div className='w-full lg:w-[40%] px-4 lg:px-0 h-full sm:h-[50%] md:mt-36 flex flex-col justify-end lg:justify-center gap-4 pb-8 lg:pb-0'>
             <h2 className=' text-[2.75rem] leading-tight lg:text-left text-[#FFDD66] sm:text-black lg:text-5xl sm:text-center md:text-6xl xl:text-6xl 2xl:text-7xl font-semibold'>RMB Transactions Simplified Here</h2>
             <p className='text-sm lg:text-md sm:text-center lg:text-left text-white sm:text-black'>The fastest and most secure way to fund any alipay, wechat or bank account and a reliable way to pay your Chinese suppliers. Managing all your orders or just transacting  at your own pace.</p>
             <div className='flex gap-4 sm:justify-center lg:justify-start'>

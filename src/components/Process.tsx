@@ -20,7 +20,7 @@ const Process = () => {
             </div>
             <div className="w-full sm:w-1/2 lg:w-1/3 sm:px-4 py-2 mb-8">
                 <h5 className="font-bold">SUBMIT ORDER DETAILS</h5>
-                <p className="mt-4">Submit the order and to gain an ID that can be used to make payments and manage the order.</p>
+                <p className="mt-4">Submit the order to gain an ID that can be used to make payments and manage the order.</p>
             </div>
             <div className="w-full sm:w-1/2 sm:border-l lg:border-l-0 lg:w-1/3 sm:px-4 py-2 mb-8">
                 <h5 className="font-bold">PAYMENT</h5>

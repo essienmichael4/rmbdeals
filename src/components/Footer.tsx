@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTelegram, faWhatsapp, faYoutube } from '@fortawesome/free-brands-svg-icons'
+import { faFacebook, faTelegram, faWhatsapp, faYoutube } from '@fortawesome/free-brands-svg-icons'
 
 const Footer = () => {
   return (
@@ -26,20 +26,23 @@ const Footer = () => {
                         <h5 className='text-[#FFDD66] mt-4'>Channels</h5>
                         <div className='flex gap-4'>
                             <div>
-                                <a href="https://whatsapp.com/channel/0029VaehZBYC1FuLb5upi23t" target='_blank' className='block text-4xl text-emerald-500'><FontAwesomeIcon icon={faWhatsapp} /></a>
+                                <a href="https://whatsapp.com/channel/0029VaehZBYC1FuLb5upi23t" target='_blank' className='block text-4xl'><FontAwesomeIcon icon={faWhatsapp} /></a>
                             </div>
                             <div>
-                                <a href="https://t.me/rmbdeals" target='_blank' className='block text-4xl text-blue-600'><FontAwesomeIcon icon={faTelegram} /></a>
+                                <a href="https://t.me/rmbdeals" target='_blank' className='block text-4xl '><FontAwesomeIcon icon={faTelegram} /></a>
                             </div>
                             <div>
-                                <a href="https://youtube.com/@rmbdeals" target='_blank' className='block text-4xl text-rose-500'><FontAwesomeIcon icon={faYoutube} /></a>
+                                <a href="https://youtube.com/@rmbdeals" target='_blank' className='block text-4xl'><FontAwesomeIcon icon={faYoutube} /></a>
+                            </div>
+                            <div>
+                                <a href="https://facebook.com/rmbdeals1" target='_blank' className='block text-4xl '><FontAwesomeIcon icon={faFacebook} /></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div className='mt-8 flex items-center justify-between border-t pt-4 flex-col sm:flex-row gap-4'>
-                <p className="text-xs">© 2024 XXX Group. All rights reserved</p>
+                <p className="text-xs">© 2024 RMB Deals Group. All rights reserved</p>
                 <div className='flex gap-8 '>
                     <p className="text-xs">Terms Of Use</p>
                     <p className="text-xs">Privacy Policy</p>

@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form'
 import { useCallback } from 'react'
 import CurrencyPicker from '../../components/CurrencyPicker'
 import AccountPicker from '../../components/AccountPicker'
+import Footer from '@/components/Footer'
 // import { Button } from '../../components/ui/button'
 
 const Unknown = () => {
@@ -153,6 +154,7 @@ const Unknown = () => {
                 </form>
             </Form>
         </div>
+        <Footer />
     </>
   )
 }

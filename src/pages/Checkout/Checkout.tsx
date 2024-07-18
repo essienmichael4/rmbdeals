@@ -2,6 +2,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } fr
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
 import { useForm } from 'react-hook-form'
+import Footer from '@/components/Footer'
 
 const Checkout = () => {
     const form = useForm({
@@ -192,6 +193,7 @@ const Checkout = () => {
                 </form>
             </Form>
         </div>
+        <Footer />
     </>
   )
 }
