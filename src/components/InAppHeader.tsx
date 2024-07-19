@@ -1,8 +1,13 @@
-import { Menu, X } from 'lucide-react'
+import { LogOut, Menu, User, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,  DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { Button } from './ui/button'
+import useAuth from '@/hooks/useAuth'
 
 const InAppHeader = () => {
+
+  const {setAuth} = useAuth()
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
   const toggleNavbar = ()=>{
@@ -22,7 +27,29 @@ const InAppHeader = () => {
         </div>
         <div className='flex gap-2 md:gap-4 items-center'>
           <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"rmbdeals/buy"}>Buy</Link>
-          <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium' to={"../"}>Logout</Link>
+          <div className="flex items-center">
+                <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className='w-12 h-12 rounded-full bg-white'><User className="h-8 w-8" /></Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                        <User className="mr-2 h-4 w-4" />
+                        <span>Profile</span>
+                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={()=>{
+                            setAuth(undefined)
+                        }}>
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Log out</span>
+                        <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            </div>
           <div className="lg:hidden md:flex flex-col items-center justify-end">
             <button onClick={toggleNavbar}>{mobileDrawerOpen ? <X /> : <Menu />}</button>
           </div>
