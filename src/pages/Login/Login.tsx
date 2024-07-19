@@ -8,8 +8,8 @@ const Login = () => {
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
                 <h1 className='text-3xl font-bold text-white sm:text-black'>BUY RMB</h1>
                 <div className='flex gap-4 lg:gap-8'>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"/buy"}>Buy</Link>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"/register"}>Register</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../rmbdeals/buy"}>Buy</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/register"}>Register</Link>
                 </div>
             </nav>
         </header>
@@ -44,8 +44,8 @@ const Login = () => {
                         <button className='rounded-full bg-blue-300 w-full text-white py-2 hover:bg-blue-500'>Login</button>
                         <div className='flex gap-2 mb-3 mt-2'>
                             <p className='text-gray-400 text-sm'>Don't have an account?</p>
-                            <Link to={"../register"} className='text-sm text-blue-300'>Register</Link>
-                            <Link to={'/dashboard'}>Go to Dashboard</Link>
+                            <Link to={"../rmbdeals/register"} className='text-sm text-blue-300'>Register</Link>
+                            <Link to={'../rmbdeals/dashboard'}>Go to Dashboard</Link>
                         </div>
                     </form>
                 </div>

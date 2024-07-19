@@ -14,12 +14,12 @@ const InAppHeader = () => {
         <nav className="container px-4 py-8 lg:py-0 lg:px-0 mx-auto flex justify-between items-center">
             <h1 className='text-3xl font-bold sm:text-black'>RMB Deals</h1>
             <div className='hidden lg:flex gap-8 h-full items-center'>
-                <NavLink to={"dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
-                <NavLink to={"orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
-                <NavLink to={"account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
+                <NavLink to={"rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                <NavLink to={"rmbdeals/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
+                <NavLink to={"rmbdeals/account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
             </div>
             <div className='flex gap-2 md:gap-4 items-center'>
-                <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../buy"}>Buy</Link>
+                <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"rmbdeals/buy"}>Buy</Link>
                 <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium' to={"../"}>Logout</Link>
                 <div className="lg:hidden md:flex flex-col items-center justify-end">
                   <button onClick={toggleNavbar}>{mobileDrawerOpen ? <X /> : <Menu />}</button>

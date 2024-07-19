@@ -35,7 +35,7 @@ const Unknown = () => {
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
                 <h1 className='text-3xl font-bold sm:text-black'>BUY RMB</h1>
                 <div className='flex gap-4 lg:gap-8'>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"/login"}>Login</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/login"}>Login</Link>
                 </div>
             </nav>
         </header>
@@ -149,7 +149,7 @@ const Unknown = () => {
                                 </FormItem>
                             )}
                         />
-                        <Link to={'../checkout'} className='mt-4'>Continue to checkout</Link>
+                        <Link to={'../rmbdeals/checkout'} className='mt-4'>Continue to checkout</Link>
                     </div>
                 </form>
             </Form>

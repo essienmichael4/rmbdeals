@@ -35,40 +35,40 @@ const Orders = () => {
                         </thead>
                         <tbody>
                             <tr className="py-4">
-                            <td className="py-4"><Link to={"10001"}>#10001</Link></td>
-                            <td>01/02/2024</td>
-                            <td>RMB</td>
-                            <td>¢ 50.00</td>
-                            <td>Akosua Sarfoa</td>
-                            <td>Supplier</td>
-                            <td><span className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-600">Completed</span></td>
+                                <td className="py-4"><Link to={"10001"}>#10001</Link></td>
+                                <td>01/02/2024</td>
+                                <td>RMB</td>
+                                <td>¢ 50.00</td>
+                                <td>Akosua Sarfoa</td>
+                                <td>Supplier</td>
+                                <td><span className="px-4 py-2 rounded-full bg-emerald-100 text-emerald-600">Completed</span></td>
                             </tr>
                             <tr>
-                            <td className="py-4">#10001</td>
-                            <td>01/02/2024</td>
-                            <td>RMB</td>
-                            <td>¢ 50.00</td>
-                            <td>Akosua Sarfoa</td>
-                            <td>Supplier</td>
-                            <td><span className="px-4 py-2 rounded-full bg-rose-100 text-rose-600">Withdrawn</span></td>
+                                <td className="py-4">#10001</td>
+                                <td>01/02/2024</td>
+                                <td>RMB</td>
+                                <td>¢ 50.00</td>
+                                <td>Akosua Sarfoa</td>
+                                <td>Supplier</td>
+                                <td><span className="px-4 py-2 rounded-full bg-rose-100 text-rose-600">Withdrawn</span></td>
                             </tr>
                             <tr>
-                            <td className="py-4">#10001</td>
-                            <td>01/02/2024</td>
-                            <td>RMB</td>
-                            <td>¢ 50.00</td>
-                            <td>Akosua Sarfoa</td>
-                            <td>Supplier</td>
-                            <td><span className="px-4 py-2 rounded-full bg-cyan-100 text-cyan-600">Pending</span></td>
+                                <td className="py-4">#10001</td>
+                                <td>01/02/2024</td>
+                                <td>RMB</td>
+                                <td>¢ 50.00</td>
+                                <td>Akosua Sarfoa</td>
+                                <td>Supplier</td>
+                                <td><span className="px-4 py-2 rounded-full bg-cyan-100 text-cyan-600">Pending</span></td>
                             </tr>
                             <tr className="py-4">
-                            <td className="py-4">#10001</td>
-                            <td>01/02/2024</td>
-                            <td>RMB</td>
-                            <td>¢ 50.00</td>
-                            <td>Akosua Sarfoa</td>
-                            <td>Supplier</td>
-                            <td><span className="px-4 py-2 rounded-full bg-gray-100 text-gray-600">Held</span></td>
+                                <td className="py-4">#10001</td>
+                                <td>01/02/2024</td>
+                                <td>RMB</td>
+                                <td>¢ 50.00</td>
+                                <td>Akosua Sarfoa</td>
+                                <td>Supplier</td>
+                                <td><span className="px-4 py-2 rounded-full bg-gray-100 text-gray-600">Held</span></td>
                             </tr>
                         </tbody>
                     </table>

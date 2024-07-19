@@ -9,8 +9,8 @@ const Register = () => {
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
                 <h1 className='text-3xl font-bold text-white sm:text-black'>BUY RMB</h1>
                 <div className='flex gap-4 lg:gap-8'>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"/buy"}>Buy</Link>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"/login"}>Login</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../rmbdeals/buy"}>Buy</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/login"}>Login</Link>
                 </div>
             </nav>
         </header>
@@ -62,7 +62,7 @@ const Register = () => {
                         <button className='rounded-full bg-blue-300 w-full mt-2 text-white py-1 2xl:py-2 hover:bg-blue-500'>Register</button>
                         <div className='flex gap-2 lg:mb-3 mt-2'>
                             <p className='text-gray-400 text-xs 2xl:text-sm'>Already have an account?</p>
-                            <Link to={"../login"} className='text-xs 2xl:text-sm text-blue-300'>Login</Link>
+                            <Link to={"../rmbdeals/login"} className='text-xs 2xl:text-sm text-blue-300'>Login</Link>
                         </div>
                     </form>
                 </div>
