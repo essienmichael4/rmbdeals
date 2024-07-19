@@ -3,6 +3,7 @@ import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
 import { useForm } from 'react-hook-form'
 import Footer from '@/components/Footer'
+import { Link } from 'react-router-dom'
 
 const Checkout = () => {
     const form = useForm({
@@ -19,7 +20,9 @@ const Checkout = () => {
     <>
         <header className='w-full py-4 border-b sticky top-0 z-50 bg-white'>
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <h1 className='text-3xl font-bold sm:text-black'>BUY RMB</h1>
+                <Link to={"../rmbdeals"}>
+                    <h1 className='text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
+                </Link>
             </nav>
         </header>
         <div className='mx-auto container mt-4 mb-16 px-4 lg:px-0'>
