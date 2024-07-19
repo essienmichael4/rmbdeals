@@ -11,6 +11,7 @@ import Order from './pages/Orders/Order'
 import Unknown from './pages/Buy/Unknown'
 import Checkout from './pages/Checkout/Checkout'
 import Whatsapp from './components/Whatsapp'
+import RequireAuth from './components/RequireAuth'
 
 function App() {
   return (
@@ -22,17 +23,14 @@ function App() {
           <Route path='rmbdeals/checkout' element={<Checkout />} />
           <Route path='rmbdeals/login' element={<Login />} />
           <Route path='rmbdeals/register' element={<Register />} />
-          <Route element={<Layout />}>
-            <Route path='rmbdeals/dashboard' element={<Dashboard />} />
-            <Route path='rmbdeals/orders' element={<Orders />} />
-            <Route path='rmbdeals/orders/:id' element={<Order />} />
-            <Route path='rmbdeals/account' element={<Account />} />
+          <Route element={<RequireAuth />}>
+            <Route element={<Layout />}>
+              <Route path='rmbdeals/dashboard' element={<Dashboard />} />
+              <Route path='rmbdeals/orders' element={<Orders />} />
+              <Route path='rmbdeals/orders/:id' element={<Order />} />
+              <Route path='rmbdeals/account' element={<Account />} />
+            </Route> 
           </Route> 
-         {/* <Route element={< />}> */}
-        //     <Route path=''>
-        //       {/* <Route path="dashboard" element={<Dashboard/>} /> */}
-        //     </Route>
-         {/* </Route> */}
          </Route>
       </Routes>
     </>
