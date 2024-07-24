@@ -7,12 +7,12 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { cn } from '../lib/utils'
 
 interface Props {
-    onChange: (value: string)=>void
+    onChange: (value: "GHS" | "RMB" | "NGN")=>void
 }
 
 const CurrencyPicker = ({ onChange}:Props) => {
     const [open, setOpen] = useState(false)
-    const [value, setValue] = useState<string>("GHS")
+    const [value, setValue] = useState<"GHS" | "RMB" | "NGN">("GHS")
 
     useEffect(()=>{
         if(!value) return

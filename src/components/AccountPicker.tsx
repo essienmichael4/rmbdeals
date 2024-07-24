@@ -7,12 +7,12 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, Command
 import { Account, Accounts } from '@/lib/constants'
 
 interface Props {
-    onChange: (value: string)=>void
+    onChange: (value: "personal" | "supplier")=>void
 }
 
 const AccountPicker = ({ onChange}:Props) => {
     const [open, setOpen] = useState(false)
-    const [value, setValue] = useState<string>("personal")
+    const [value, setValue] = useState<"personal" | "supplier">("personal")
 
     useEffect(()=>{
         if(!value) return

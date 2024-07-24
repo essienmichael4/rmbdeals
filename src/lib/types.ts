@@ -22,3 +22,14 @@ export type HistoryResponseType = {
     month: number,
     day?: number
 }
+
+export type Order = {
+    id:number,
+    account:string,
+    product:string,
+    currency: string,
+    rate: number,
+    amount: number,
+    rmbEquivalence: number,
+    recipient: string
+}

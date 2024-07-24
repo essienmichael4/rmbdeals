@@ -20,7 +20,7 @@ function App() {
         <Route element={<Whatsapp />}>
           <Route path='/rmbdeals' element={<Home />} />
           <Route path='rmbdeals/buy' element={<Unknown />} />
-          <Route path='rmbdeals/checkout' element={<Checkout />} />
+          <Route path='rmbdeals/checkout/:id' element={<Checkout />} />
           <Route path='rmbdeals/login' element={<Login />} />
           <Route path='rmbdeals/register' element={<Register />} />
           <Route element={<RequireAuth />}>
