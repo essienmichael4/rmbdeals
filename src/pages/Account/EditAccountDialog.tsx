@@ -1,34 +1,86 @@
 import { useState } from 'react'
 import { Dialog, DialogTitle, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '../../components/ui/dialog'
-
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../../components/ui/form'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
+import { UserUpdateSchema, UserUpdateSchemaType } from '@/schema/user'
+import { useMutation } from '@tanstack/react-query'
+import { axios_instance } from '@/api/axios'
+import useAuth from '@/hooks/useAuth'
+import { toast } from 'sonner'
+import axios from 'axios'
+import { Loader2 } from 'lucide-react'
 
 interface Props{
     trigger?: React.ReactNode,
-    successCallback?: ()=>void
 }
 
 const EditAccountDialog = ({trigger}:Props) => {
+    const {auth, setAuth} = useAuth()
     const [open, setOpen] = useState(false)
-    const form = useForm({
-        // resolver:zodResolver(CreateNewCustomerSchema),
+
+    const form = useForm<UserUpdateSchemaType>({
+        resolver:zodResolver(UserUpdateSchema),
         defaultValues:{
-            firstname:"",
-            lastname: "",
-            othernames: "",
-            email: "",
-            phones: []
+            name: "",
+            email: ""
         }
     })
+
+    const updateUser = async (data:UserUpdateSchemaType)=>{
+        const response = await axios_instance.put(`/users/account`, {
+            ...data
+        },{
+            headers: {
+                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
+            }
+        })
+
+        return response.data
+    }
+
+    const {mutate, isPending} = useMutation({
+        mutationFn: updateUser,
+        onSuccess: (data)=>{
+            toast.success("Account update successful", {
+                id: "user-update"
+            })
+
+            setAuth(data)
+
+            form.reset({
+                email: "",
+                name: ""
+            })
+
+            setOpen(prev => !prev)
+        },onError: (err:any) => {
+            if (axios.isAxiosError(err)){
+                toast.error(err?.response?.data?.error, {
+                    id: "user-update"
+                })
+            }else{
+                toast.error(`Something went wrong`, {
+                    id: "user-update"
+                })
+            }
+        }
+    })
+
+    const onSubmit = (data:UserUpdateSchemaType)=>{
+        toast.loading("upadating account...", {
+            id: "user-update"
+        })
+        mutate(data)
+    }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{trigger}</DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
+            <DialogContent className='w-[90%] mx-auto rounded-2xl'>
+                <DialogHeader className='items-start'>
                     <DialogTitle>
                         Edit Account
                     </DialogTitle>
@@ -37,7 +89,7 @@ const EditAccountDialog = ({trigger}:Props) => {
                     <form className='space-y-2'>
                         <FormField 
                             control={form.control}
-                            name="othernames"
+                            name="name"
                             render={({field}) =>(
                                 <FormItem>
                                     <FormLabel className='text-xs'>Name</FormLabel>
@@ -72,11 +124,11 @@ const EditAccountDialog = ({trigger}:Props) => {
                                 Cancel
                         </Button>
                     </DialogClose>
-                    {/* <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending} className='bg-[#47C9D1] hover:bg-[#106981]'
+                    <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending} className='bg-[#FFDD66] hover:bg-[#FFDD76] text-black'
                     >
-                        {!isPending && "Create Customer"}
+                        {!isPending && "Edit Account"}
                         {isPending && <Loader2 className='animate-spin' /> }
-                    </Button> */}
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

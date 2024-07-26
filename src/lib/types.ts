@@ -31,5 +31,16 @@ export type Order = {
     rate: number,
     amount: number,
     rmbEquivalence: number,
-    recipient: string
+    recipient: string,
+    status?: string,
+    createdAt?: string
+}
+
+export type OrderBilling = {
+
+}
+
+export type User = {
+    name: string,
+    email: string
 }

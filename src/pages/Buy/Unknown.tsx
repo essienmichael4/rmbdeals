@@ -164,13 +164,13 @@ const Unknown = () => {
                     <div className="fixed right-0 z-20 w-full bg-white p-12 flex flex-col justify-center items-center lg:hidden border-y">
                     <ul>
                         <li className='py-2 text-center'>
-                        <NavLink to={"dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                        <NavLink to={"rmbdeals/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
+                        <NavLink to={"rmbdeals/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
+                        <NavLink to={"rmbdeals/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
                         </li>
                     </ul>
                     

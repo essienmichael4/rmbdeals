@@ -1,22 +1,22 @@
+import { useState } from 'react'
+import CheckoutLogin from './CheckoutLogin'
+import Footer from '@/components/Footer'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '../../components/ui/form'
 import { Input } from '../../components/ui/input'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,  DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from '../../components/ui/button'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import Footer from '@/components/Footer'
 import { Link, useParams, useNavigate, NavLink } from 'react-router-dom'
 import { Textarea } from '@/components/ui/textarea'
+import { Order } from '@/lib/types'
+import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
+import { toast } from 'sonner'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { axios_instance } from '@/api/axios'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { RegisterUserCheckoutSchema, RegisterUserCheckoutSchemaType } from '@/schema/checkout'
-import { toast } from 'sonner'
-import { Order } from '@/lib/types'
-import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
-import { useState } from 'react'
-import CheckoutLogin from './CheckoutLogin'
 
 const Checkout = () => {
     const {auth, setAuth} = useAuth()
@@ -39,10 +39,15 @@ const Checkout = () => {
     const toggleNavbar = ()=>{
       setMobileDrawerOpen(!mobileDrawerOpen)
     }
+    
+    const setForm = (name:string, email: string)=>{
+        form.setValue("name", name)
+        form.setValue("email", email)
+    }
 
     const fetchOrder = async ()=>{
         if(auth){
-            const response = await axios_instance.get(`/orders/${id}`,{
+            const response = await axios_instance.get(`/orders/checkout/info/${id}`,{
                 headers: {
                   Authorization: `Bearer ${auth?.backendTokens.accessToken}`
                 }
@@ -50,7 +55,7 @@ const Checkout = () => {
             const order:Order = response.data
             return order
         }else{
-            const response = await axios_instance.get(`/orders/nonuser/${id}`)
+            const response = await axios_instance.get(`/orders/checkout/info/nonuser/${id}`)
             const order:Order = response.data
             return order
         }
@@ -177,20 +182,20 @@ const Checkout = () => {
                         </div>
                     }
                     {!auth && 
-                    <CheckoutLogin id={id as string} trigger={
+                    <CheckoutLogin id={id as string} setForm={setForm} trigger={
                         <Button className='rounded-full text-black text-md font-medium bg-[#FFDD66] hover:bg-[#FFDD6676]'>Login</Button>} /> }
                 </nav>
                 {auth && mobileDrawerOpen && 
                     <div className="fixed right-0 z-20 w-full bg-white p-12 flex flex-col justify-center items-center lg:hidden border-y">
                     <ul>
                         <li className='py-2 text-center'>
-                        <NavLink to={"dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                        <NavLink to={"rmbdeals/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
+                        <NavLink to={"rmbdeals/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
+                        <NavLink to={"rmbdeals/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
                         </li>
                     </ul>
                     
@@ -213,7 +218,7 @@ const Checkout = () => {
                                         <span className='text-red-500 text-3xl'>&#9888;</span>
                                         <div>
                                             <p className='text-xs  text-gray-500'>
-                                            Please login if you already have an account. Otherwise, continue to fill the form.
+                                            Please <CheckoutLogin id={id as string} setForm={setForm} trigger={<button className='text-[#dab531] underline'>login</button>} /> if you already have an account. Otherwise, continue to fill the form.
                                             </p>
                                         </div>
                                     </div>

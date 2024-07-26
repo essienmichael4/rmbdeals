@@ -11,16 +11,19 @@ import { useMutation, useQueryClient} from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
 import useAuth from '@/hooks/useAuth'
+import axios from 'axios'
 
 interface Props{
     trigger?: React.ReactNode,
-    id:string
+    id:string,
+    setForm: (name: string, email:string) => void
 }
 
-const CheckoutLogin = ({trigger, id}:Props) => {
+const CheckoutLogin = ({trigger, id, setForm}:Props) => {
     const {setAuth} = useAuth()
     const [open, setOpen] = useState(false)
     const queryClient = useQueryClient()
+    
     const form = useForm<LoginSchemaType>({
         resolver:zodResolver(LoginSchema),
         defaultValues:{
@@ -45,6 +48,7 @@ const CheckoutLogin = ({trigger, id}:Props) => {
             })
 
             setAuth(data)
+            setForm(data?.user?.name, data?.user?.email)
 
             form.reset({
                 email: "",
@@ -54,6 +58,16 @@ const CheckoutLogin = ({trigger, id}:Props) => {
             queryClient.invalidateQueries({queryKey: ["order"]})
 
             setOpen(prev => !prev)
+        },onError: (err:any) => {
+            if (axios.isAxiosError(err)){
+                toast.error(err?.response?.data?.error, {
+                    id: "login"
+                })
+            }else{
+                toast.error(`Something went wrong`, {
+                    id: "login"
+                })
+            }
         }
     })
 

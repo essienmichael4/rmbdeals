@@ -47,7 +47,6 @@ const Login = () => {
             })
             navigate(from, {replace:true})
         }catch(err:any){
-            console.log(err);
             setIsPending(false)
             if (axios.isAxiosError(err)){
                 toast.error(err?.response?.data?.error, {

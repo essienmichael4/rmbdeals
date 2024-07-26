@@ -7,11 +7,11 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Layout from './components/Layout'
 import Orders from './pages/Orders/Orders'
 import Account from './pages/Account/Account'
-import Order from './pages/Orders/Order'
 import Unknown from './pages/Buy/Unknown'
 import Checkout from './pages/Checkout/Checkout'
 import Whatsapp from './components/Whatsapp'
 import RequireAuth from './components/RequireAuth'
+import OrderItem from './pages/Orders/OrderItem'
 
 function App() {
   return (
@@ -27,7 +27,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path='rmbdeals/dashboard' element={<Dashboard />} />
               <Route path='rmbdeals/orders' element={<Orders />} />
-              <Route path='rmbdeals/orders/:id' element={<Order />} />
+              <Route path='rmbdeals/orders/:id' element={<OrderItem />} />
               <Route path='rmbdeals/account' element={<Account />} />
             </Route> 
           </Route> 
