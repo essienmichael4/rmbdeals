@@ -91,6 +91,8 @@ const Checkout = () => {
                 password: data.password
             })
 
+            setAuth({user: response.data.user, backendTokens: response.data.backendTokens})
+
             return response.data
         }
     }
@@ -102,7 +104,7 @@ const Checkout = () => {
                 id: "billing"
             })
 
-            setAuth({user: data.user, backendTokens: data.backendTokens})
+            // setAuth({user: data.user, backendTokens: data.backendTokens})
 
             form.reset({
                 password:"",

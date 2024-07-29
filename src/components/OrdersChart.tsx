@@ -1,16 +1,52 @@
+import { useState } from 'react'
 import {Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts'
 import { cn } from '../lib/utils'
+import useAuth from '@/hooks/useAuth'
+import { useQuery } from '@tanstack/react-query'
+import { axios_instance } from '@/api/axios'
+import HistoryPeriodSelector from './HistoryPeriodSelector'
 
 const OrdersChart = () => {
-    const dataAvailable:any = []
-  return (
-    <div className='mt-4'>
+    const {auth} = useAuth()
+    const [timeframe, setTimeFrame] = useState<"MONTH" | "YEAR">("MONTH")
+    const [period, setPeriod] = useState({
+        month: new Date().getMonth(),
+        year: new Date().getFullYear()
+    })
+    
+    const historyDataQuery = useQuery<[]>({
+        queryKey: ["summary", "history", timeframe, period],
+        queryFn: async() => await axios_instance.get(`/history-data?timeframe=${timeframe}&month=${period.month}&year=${period.year}`, {
+            headers: {
+                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
+            }
+        }).then(res => {
+            console.log(res.data)
+            return res.data
+        })
+    })
+
+    const dataAvailable = historyDataQuery.data && historyDataQuery.data.length > 0
+    
+    return (
+        <div className='mt-4 p-4 border rounded-2xl bg-white'>
+            <div className='flex items-center gap-8'>
+                <h3 className='font-bold text-xl'>History</h3>
+
+                <HistoryPeriodSelector 
+                    timeframe={timeframe}
+                    period={period}
+                    setPeriod={setPeriod}
+                    setTimeFrame={setTimeFrame}
+                />
+            </div>
+            <div className='mt-4'>
                 {
-                dataAvailable.length != 0 && 
+                    dataAvailable && 
                     <ResponsiveContainer width={"100%"} height={300}>
-                        <BarChart height={300} data={[]} barCategoryGap={5}>
+                        <BarChart height={300} data={historyDataQuery.data} barCategoryGap={5}>
                             <defs>
-                                <linearGradient id='servicesBar' x1={0} y1={0} x2={0} y2={1}>
+                                <linearGradient id='ordersBar' x1={0} y1={0} x2={0} y2={1}>
                                     <stop
                                         offset={0}
                                         stopColor='#106981'
@@ -38,7 +74,7 @@ const OrdersChart = () => {
                                     const {year, month, day} = data
                                     const date = new Date(year, month, day || 1)
 
-                                    if("YEAR" === "YEAR") return date.toLocaleDateString("default", {
+                                    if(timeframe === "YEAR") return date.toLocaleDateString("default", {
                                         month: "long"
                                     })
 
@@ -56,9 +92,9 @@ const OrdersChart = () => {
                             />
 
                             <Bar 
-                                dataKey={"services"}
-                                label="Services"
-                                fill='url(#servicesBar)'
+                                dataKey={"orders"}
+                                label="Orders"
+                                fill='url(#ordersBar)'
                                 radius={4}
                                 className='cursor-pointer'
                             />
@@ -70,25 +106,26 @@ const OrdersChart = () => {
                     </ResponsiveContainer>
                 }
                 {
-                dataAvailable.length == 0 && 
+                    !dataAvailable && 
                     <div className='bg-gray-100 rounded-lg h-[300px] flex flex-col items-center justify-center'>
                         No orders found for the selected account
                         <p className="text-sm text-muted-foreground">Try making a new order</p>
                     </div>
                 }
             </div>
-  )
+        </div>
+    )
 }
 
 function CustomTooltip({active, payload}: any){
     if(!active || !payload || payload.length == 0) return null
 
     const data = payload[0].payload
-    const {services} = data
+    const {orders} = data
 
     return (
         <div className='min-w-[200px] rounded border bg-background p-4'>
-            <TooltipRow label="Services" value={services} bgColor="bg-emerald-500" textColor="text-emerald-500" />
+            <TooltipRow label="Orders" value={orders} bgColor="bg-emerald-500" textColor="text-emerald-500" />
         </div>
     )
 }
