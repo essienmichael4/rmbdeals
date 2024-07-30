@@ -1,9 +1,9 @@
 import { axios_instance } from '@/api/axios'
 import useAuth from '@/hooks/useAuth'
-import { Stats } from '@/lib/types'
+import { Currency, Stats } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowBigDown } from 'lucide-react'
-// import React, { useState } from 'react'
+
 interface Props{
     from: Date,
     to:Date
@@ -12,18 +12,27 @@ interface Props{
 const Statistics = ({from, to}:Props) => {
     const {auth} = useAuth()
 
+    const currency = useQuery<Currency>({
+        queryKey: ["currency"],
+        queryFn: async() => await axios_instance.get(`/currencies/user`, {
+            headers: {
+                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
+            }
+        }).then(res => {
+            return res.data
+        })
+    })
+
     const stats = useQuery<Stats>({
         queryKey: ["summary", from, to],
         queryFn: async() => await axios_instance.get(`/statistics?from=${from}&to=${to}`, {
             headers: {
                 'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
             }
-        }).then(res => {
-            console.log(res.data);
-            
-            return res.data
-        })
+        }).then(res => res.data)
     })
+
+    
 
     return (
         <div className="flex items-center flex-wrap">
@@ -32,11 +41,11 @@ const Statistics = ({from, to}:Props) => {
                 <div className="bg-black text-[#FFDD66] rounded-xl p-4">
                 <ArrowBigDown className="w-12 h-12 mb-4"/>
                 <h4 className="font-bold">Total Expense</h4>
-                <p className="text-3xl">¢ {stats.data?.successfulExpense._sum.amount || 0}</p>
+                <p className="text-3xl">{currency.data?.label} {stats.data?.successfulExpense._sum.amount || 0}</p>
                 </div>
                 <div className="p-4 text-black">
                 <h4 className=" font-bold">Current Rate</h4>
-                <p className="text-2xl">¢ 0.456</p>
+                <p className="text-2xl">{currency.data?.label} {currency.data?.rate}</p>
                 </div>
             </div>
             </div>
@@ -49,7 +58,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Projected Expense</h4>
-                <p className="text-2xl">¢ {stats.data?.projectedExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{currency.data?.label} {stats.data?.projectedExpense._sum.amount || 0}</p>
                 </div>
             </div>
             </div>
@@ -62,7 +71,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Successful Expense</h4>
-                <p className="text-2xl">¢ {stats.data?.successfulExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{currency.data?.label} {stats.data?.successfulExpense._sum.amount || 0}</p>
                 </div>
             </div>
             </div>
@@ -75,7 +84,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Held Expense</h4>
-                <p className="text-2xl">¢ {stats.data?.heldExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{currency.data?.label} {stats.data?.heldExpense._sum.amount || 0}</p>
                 </div>
             </div>
             </div>

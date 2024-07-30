@@ -4,7 +4,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from '../../components/ui/input'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import CurrencyPicker from '../../components/CurrencyPicker'
 import AccountPicker from '../../components/AccountPicker'
 import Footer from '@/components/Footer'
@@ -16,34 +16,84 @@ import { axios_instance } from '@/api/axios'
 import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
+import { Currency } from '@/lib/types'
 
 const Unknown = () => {
     const {auth, setAuth} = useAuth()
     const navigate = useNavigate()
     const [qrcode, setQrcode] = useState<File | undefined>()
     const [isPending, setIsPending] = useState(false)
+    const [rate, setRate] = useState<number>(0)
+    const [amount, setAmount] = useState<number>(0)
+    const [rmb, setRMB] = useState<number>(0)
     const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
+
     const form = useForm<OrderSchemaType>({
         resolver:zodResolver(OrderSchema),
         defaultValues:{
             recipient: "",
-            currency: "GHS",
+            currency: "",
             account: "personal"
         }
     })
 
+    useEffect( ()=>{
+        let isMounted = true
+        const controller = new AbortController()
+    
+        const getCurrency = async() => {
+          try{
+            if(auth){
+                const result = await axios_instance.get<Currency>("/currencies/user",{
+                        headers: {
+                            'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
+                        }
+                }).then(res => res.data)
+                setRate(result.rate || 0)
+                isMounted && form.setValue("currency", result.currency || "GHS")
+            }else{
+                const result = await axios_instance.get<Currency>("/currencies/unknown").then(res => res.data)
+                setRate(result.rate || 0)
+                isMounted && form.setValue("currency", result.currency || "GHS")
+            }
+            
+          }catch(err){
+            if (axios.isAxiosError(err)){
+                toast.error(err?.response?.data?.error, {
+                    id: "login"
+                })
+            }
+          }
+        }
+    
+        getCurrency()
+    
+        return ()=>{
+          isMounted = false
+          controller.abort()
+        }
+      },[])
 
     const toggleNavbar = ()=>{
       setMobileDrawerOpen(!mobileDrawerOpen)
     }
 
-    const handleCurrencyChange = useCallback((value:"GHS" | "RMB" | "NGN")=>{
+    const handleCurrencyChange = useCallback((value:string, rate:number)=>{
         form.setValue("currency", value)
+        setRate(rate)
+        const rmbEquivalence = Number(amount) * rate
+        setRMB(rmbEquivalence)
     }, [form])
 
     const handleAccountChange = useCallback((value:"personal" | "supplier")=>{
         form.setValue("account", value)
     }, [form])
+
+    const handleInputChange = (value:number)=>{
+        const rmbEquivalence = value * rate
+        setAmount(value)
+        setRMB(rmbEquivalence)
+    }
     
     const handleFileChange = useCallback((value:File | undefined)=>{
         setQrcode(value)
@@ -189,7 +239,7 @@ const Unknown = () => {
                             <div className='flex justify-between mb-2'>
                                 <h5 className='text-xl font-bold'>Order Details</h5>
 
-                                <p className="text-xl">Current Rate: </p>
+                                <p className="text-xl">Current Rate: {rate}</p>
                             </div>
                             <hr />
                             <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
@@ -230,15 +280,15 @@ const Unknown = () => {
                                         <FormItem className='w-full lg:w-2/3'>
                                             <FormLabel className='text-xs 2xl:text-sm'>Transacted Amount</FormLabel>
                                             <FormControl>
-                                                <Input {...field}  type='number' min={0} placeholder='0'/>
+                                                <Input {...field}  type='number' min={0} placeholder='0' onChange={(e)=>handleInputChange(Number(e.target.value))}/>
                                             </FormControl>
                                         </FormItem>
                                     )} 
                                 />
 
-                                <div className='border flex flex-1 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
+                                <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
                                     <p className='text-xs 2xl:text-sm font-bold'>RMB Equivalence</p>
-                                    <p className='text-xl'>Y 2000</p>
+                                    <p className='text-xl'>¥ {rmb}</p>
                                 </div>
                             </div>
 

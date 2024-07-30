@@ -20,16 +20,13 @@ const OrdersChart = () => {
             headers: {
                 'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
             }
-        }).then(res => {
-            console.log(res.data)
-            return res.data
-        })
+        }).then(res => res.data)
     })
 
     const dataAvailable = historyDataQuery.data && historyDataQuery.data.length > 0
     
     return (
-        <div className='mt-4 p-4 border rounded-2xl bg-white'>
+        <div className='mt-4 p-4 border rounded-2xl bg-white overflow-hidden'>
             <div className='flex items-center gap-8'>
                 <h3 className='font-bold text-xl'>History</h3>
 

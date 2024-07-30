@@ -1,9 +1,17 @@
 import { Dispatch, SetStateAction } from "react"
 
+export type Currency = {
+    rate:number,
+    label:string,
+    description:string,
+    currency: string
+}
+
 export type AuthType = {
     user:{
         name: string,
-        email: string
+        email: string,
+        role?: string
     },
     backendTokens: {
         accessToken: string,

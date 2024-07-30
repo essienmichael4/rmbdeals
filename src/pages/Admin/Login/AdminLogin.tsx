@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import hero from '../../assets/hero.jpg'
+import hero from '../../../assets/hero.jpg'
 import Footer from '@/components/Footer'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,12 +13,12 @@ import { Loader2 } from 'lucide-react'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 
-const Login = () => {
-    const {auth, setAuth} = useAuth()
+const AdminLogin = () => {
+    const {setAuth} = useAuth()
     const [isPending, setIsPending] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
-    const from = location.state?.from?.pathname || "/rmbdeals/dashboard"
+    const from = location.state?.from?.pathname || "/rmbdeals/co/administrators/dashboard"
     const form = useForm<LoginSchemaType>({
         resolver: zodResolver(LoginSchema),
         defaultValues:{
@@ -45,12 +45,7 @@ const Login = () => {
             toast.success("Login successful", {
                 id: "login"
             })
-            
-            if(auth?.user.role === "ADMIN"){
-                navigate("/rmbdeals/co/administrator/dashboard", {replace:true})
-            }else{
-                navigate(from, {replace:true})
-            }
+            navigate(from, {replace:true})
         }catch(err:any){
             setIsPending(false)
             if (axios.isAxiosError(err)){
@@ -68,10 +63,6 @@ const Login = () => {
                 <Link to={"../rmbdeals"}>
                     <h1 className='text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
                 </Link>
-                <div className='flex gap-4 lg:gap-8'>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../rmbdeals/buy"}>Buy</Link>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/register"}>Register</Link>
-                </div>
             </nav>
         </header>
         <div className='mx-auto container'>
@@ -79,7 +70,7 @@ const Login = () => {
                 <div className='absolute rounded-t-3xl bottom-0 lg:relative w-full lg:w-[40%] pt-4 px-4 bg-white lg:px-0 lg:h-full  lg:mt-0 flex flex-col justify-end lg:justify-center gap-4 pb-4 lg:pb-0'>
                     <Form {...form}>
                         <form className='md:w-full xl:w-[80%]' onSubmit={form.handleSubmit(onSubmit)}>
-                            <h1 className='text-3xl lg:text-5xl mb-1 lg:mb-2 2xl:mb-4'>Login</h1>
+                            <h1 className='text-3xl lg:text-5xl mb-1 '>Administrator Login</h1>
                             <p className='text-xs mb-3 lg:mb-6 2xl:mb-8 text-gray-400' >The faster you type, the faster you manage your stuff</p>
                             
                             <FormField 
@@ -122,8 +113,8 @@ const Login = () => {
                                 {isPending && <Loader2 className='animate-spin' /> }
                             </button>
                             <div className='flex gap-2 mb-3 mt-2'>
-                                <p className='text-gray-400 text-xs 2xl:text-sm'>Don't have an account?</p>
-                                <Link to={"../rmbdeals/register"} className='text-xs 2xl:text-sm text-blue-300'>Register</Link>
+                                <p className='text-gray-400 text-xs 2xl:text-sm'>Don't have an account?</p> <span className='text-xs 2xl:text-sm text-rose-600'>Reach out to your manager</span>
+                                {/* <Link to={"../rmbdeals/register"} className='text-xs 2xl:text-sm text-blue-300'>Register</Link> */}
                             </div>
                         </form>
                     </Form>
@@ -138,4 +129,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

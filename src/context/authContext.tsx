@@ -5,7 +5,8 @@ export const AuthContext = createContext<AuthContextType>({
     auth: {
         user:{
             name:"",
-            email: ""
+            email: "",
+            role: ""
         },
         backendTokens: {
             accessToken: "",

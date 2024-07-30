@@ -1,9 +1,9 @@
-import { Button } from "../../components/ui/button"
+import { Button } from "@/components/ui/button"
 import ChangePassword from "./ChangePassword"
 import EditAccountDialog from "./EditAccountDialog"
 import useAuth from "@/hooks/useAuth"
 
-const Account = () => {
+const AdminAccount = () => {
   const {auth} = useAuth()
 
   return (
@@ -38,4 +38,4 @@ const Account = () => {
   )
 }
 
-export default Account
+export default AdminAccount

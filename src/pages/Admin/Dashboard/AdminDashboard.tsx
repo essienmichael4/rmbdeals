@@ -5,7 +5,7 @@ import RecentOrders from "@/components/RecentOrders"
 import Statistics from "@/components/Statistics"
 
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const [dateRange, ] = useState<{from: Date, to: Date}>({
     from: startOfMonth(subMonths(new Date(), 2)),
     to: new Date()
@@ -22,4 +22,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default AdminDashboard
