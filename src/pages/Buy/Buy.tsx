@@ -17,10 +17,12 @@ import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
 import { Currency } from '@/lib/types'
+import useAxiosToken from '@/hooks/useAxiosToken'
 
-const Unknown = () => {
+const Buy = () => {
     const {auth, setAuth} = useAuth()
     const navigate = useNavigate()
+    const axios_instance_token = useAxiosToken()
     const [qrcode, setQrcode] = useState<File | undefined>()
     const [isPending, setIsPending] = useState(false)
     const [rate, setRate] = useState<number>(0)
@@ -44,15 +46,15 @@ const Unknown = () => {
         const getCurrency = async() => {
           try{
             if(auth){
-                const result = await axios_instance.get<Currency>("/currencies/user",{
-                        headers: {
-                            'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
-                        }
+                const result = await axios_instance_token.get<Currency>("/currencies/user",{
+                    signal: controller.signal
                 }).then(res => res.data)
                 setRate(result.rate || 0)
                 isMounted && form.setValue("currency", result.currency || "GHS")
             }else{
-                const result = await axios_instance.get<Currency>("/currencies/unknown").then(res => res.data)
+                const result = await axios_instance.get<Currency>("/currencies/unknown",{
+                    signal: controller.signal
+                }).then(res => res.data)
                 setRate(result.rate || 0)
                 isMounted && form.setValue("currency", result.currency || "GHS")
             }
@@ -327,4 +329,4 @@ const Unknown = () => {
     )
 }
 
-export default Unknown
+export default Buy

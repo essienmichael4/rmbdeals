@@ -7,7 +7,6 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import Layout from './components/Layout'
 import Orders from './pages/Orders/Orders'
 import Account from './pages/Account/Account'
-import Unknown from './pages/Buy/Unknown'
 import Checkout from './pages/Checkout/Checkout'
 import Whatsapp from './components/Whatsapp'
 import RequireAuth from './components/RequireAuth'
@@ -18,6 +17,7 @@ import AdminLayout from './components/AdminLayout'
 import OrdersAdmin from './pages/Admin/Orders/OrdersAdmin'
 import OrderItemAdmin from './pages/Admin/Orders/OrderItemAdmin'
 import AdminAccount from './pages/Admin/Account/AdminAccount'
+import Buy from './pages/Buy/Buy'
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
         {/* User Routes */}
         <Route element={<Whatsapp />}>
           <Route path='/rmbdeals' element={<Home />} />
-          <Route path='rmbdeals/buy' element={<Unknown />} />
+          <Route path='rmbdeals/buy' element={<Buy />} />
           <Route path='rmbdeals/checkout/:id' element={<Checkout />} />
           <Route path='rmbdeals/login' element={<Login />} />
           <Route path='rmbdeals/register' element={<Register />} />

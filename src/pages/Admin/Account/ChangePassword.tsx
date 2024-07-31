@@ -6,12 +6,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { UserPasswordUpdateSchema, UserPasswordUpdateSchemaType } from '@/schema/user'
-import { axios_instance } from '@/api/axios'
-import useAuth from '@/hooks/useAuth'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
+import useAxiosToken from '@/hooks/useAxiosToken'
 
 interface Props{
     trigger?: React.ReactNode,
@@ -19,7 +18,7 @@ interface Props{
 
 const ChangePassword = ({trigger}:Props) => {
     const [open, setOpen] = useState(false)
-    const {auth} = useAuth()
+    const axios_instance_token = useAxiosToken()
 
     const form = useForm<UserPasswordUpdateSchemaType>({
         resolver:zodResolver(UserPasswordUpdateSchema),
@@ -31,13 +30,9 @@ const ChangePassword = ({trigger}:Props) => {
     })
 
     const updatePassword = async (data:UserPasswordUpdateSchemaType)=>{
-        const response = await axios_instance.put(`/users/password`, {
+        const response = await axios_instance_token.put(`/users/password`, {
             ...data
-        },{
-            headers: {
-                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
-            }
-        })
+        },)
 
         return response.data
     }

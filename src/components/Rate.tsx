@@ -5,11 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 const Rate = () => {
     const rate = useQuery<Currency[]>({
         queryKey: ["currency",],
-        queryFn: async() => await axios_instance.get(`/currency`).then(res => {
-            console.log(res.data);
-            
-            return res.data
-        })
+        queryFn: async() => await axios_instance.get(`/currency`).then(res => res.data)
     })
 
     return (

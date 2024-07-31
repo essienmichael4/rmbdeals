@@ -7,18 +7,19 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { UserUpdateSchema, UserUpdateSchemaType } from '@/schema/user'
 import { useMutation } from '@tanstack/react-query'
-import { axios_instance } from '@/api/axios'
 import useAuth from '@/hooks/useAuth'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
+import useAxiosToken from '@/hooks/useAxiosToken'
 
 interface Props{
     trigger?: React.ReactNode,
 }
 
 const EditAccountDialog = ({trigger}:Props) => {
-    const {auth, setAuth} = useAuth()
+    const {setAuth} = useAuth()
+    const axios_instance_token = useAxiosToken()
     const [open, setOpen] = useState(false)
 
     const form = useForm<UserUpdateSchemaType>({
@@ -30,13 +31,9 @@ const EditAccountDialog = ({trigger}:Props) => {
     })
 
     const updateUser = async (data:UserUpdateSchemaType)=>{
-        const response = await axios_instance.put(`/users/account`, {
+        const response = await axios_instance_token.put(`/users/account`, {
             ...data
-        },{
-            headers: {
-                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
-            }
-        })
+        },)
 
         return response.data
     }

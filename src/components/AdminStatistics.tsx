@@ -1,5 +1,5 @@
 import useAxiosToken from '@/hooks/useAxiosToken'
-import { Currency, Stats } from '@/lib/types'
+import { Stats } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import { ArrowBigDown } from 'lucide-react'
 
@@ -8,17 +8,12 @@ interface Props{
     to:Date
 }
 
-const Statistics = ({from, to}:Props) => {
+const AdminStatistics = ({from, to}:Props) => {
     const axios_instance_token = useAxiosToken()
 
-    const currency = useQuery<Currency>({
-        queryKey: ["currency"],
-        queryFn: async() => await axios_instance_token.get(`/currencies/user`).then(res => res.data)
-    })
-
     const stats = useQuery<Stats>({
-        queryKey: ["summary", from, to],
-        queryFn: async() => await axios_instance_token.get(`/statistics?from=${from}&to=${to}`).then(res => res.data)
+        queryKey: ["summary-admin", from, to],
+        queryFn: async() => await axios_instance_token.get(`/statistics-admin?from=${from}&to=${to}`).then(res => res.data)
     })
 
     
@@ -30,11 +25,11 @@ const Statistics = ({from, to}:Props) => {
                 <div className="bg-black text-[#FFDD66] rounded-xl p-4">
                 <ArrowBigDown className="w-12 h-12 mb-4"/>
                 <h4 className="font-bold">Total Expense</h4>
-                <p className="text-3xl">{currency.data?.label} {stats.data?.successfulExpense._sum.amount || 0}</p>
+                <p className="text-3xl">{stats.data?.successfulExpense._sum.amount || 0}</p>
                 </div>
                 <div className="p-4 text-black">
                 <h4 className=" font-bold">Current Rate</h4>
-                <p className="text-2xl">{currency.data?.label} {currency.data?.rate}</p>
+                <p className="text-2xl">0422</p>
                 </div>
             </div>
             </div>
@@ -47,7 +42,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Projected Expense</h4>
-                <p className="text-2xl">{currency.data?.label} {stats.data?.projectedExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{stats.data?.projectedExpense._sum.amount || 0}</p>
                 </div>
             </div>
             </div>
@@ -60,7 +55,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Successful Expense</h4>
-                <p className="text-2xl">{currency.data?.label} {stats.data?.successfulExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{stats.data?.successfulExpense._sum.amount || 0}</p>
                 </div>
             </div>
             </div>
@@ -73,7 +68,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Held Expense</h4>
-                <p className="text-2xl">{currency.data?.label} {stats.data?.heldExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{stats.data?.heldExpense._sum.amount || 0}</p>
                 </div>
             </div>
             </div>
@@ -81,4 +76,4 @@ const Statistics = ({from, to}:Props) => {
     )
 }
 
-export default Statistics
+export default AdminStatistics

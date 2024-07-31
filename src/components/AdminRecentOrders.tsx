@@ -8,19 +8,19 @@ import useAxiosToken from '@/hooks/useAxiosToken'
 
 const emptyData: any[]= []
 
-const RecentOrders = () => {
+const AdminRecentOrders = () => {
     const axios_instance_token = useAxiosToken()
 
     const orders = useQuery<Order[]>({
-        queryKey: ["summary", "orders"],
-        queryFn: async() => await axios_instance_token.get(`/recent-orders`).then(res => res.data)
+        queryKey: ["summary-admin", "orders"],
+        queryFn: async() => await axios_instance_token.get(`/recent-orders-admin`).then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{
         accessorKey: "id",
         header:({column})=>(<DataTableColumnHeader column={column} title='Order ID' />),
         cell:({row}) => <div>
-            <Link to={`${row.original.id}`}>
+            <Link to={`../rmbdeals/co/administrator/orders/${row.original.id}`}>
                 <span className='text-gray-400'>#</span>{row.original.id}
             </Link>
         </div>
@@ -125,4 +125,4 @@ const RecentOrders = () => {
     )
 }
 
-export default RecentOrders
+export default AdminRecentOrders

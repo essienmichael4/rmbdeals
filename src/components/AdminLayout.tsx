@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom"
-import InAppHeader from "./InAppHeader"
+import AdminInAppHeader from "./AdminAppHeader"
 
 const AdminLayout = () => {
   return (
     <>
-        <InAppHeader />
+        <AdminInAppHeader />
         <div className="container mt-8 mx-auto">
             <Outlet />
         </div>

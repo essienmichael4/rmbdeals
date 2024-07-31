@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import hero from '../../assets/hero.jpg'
 import Footer from '@/components/Footer'
 import { useForm } from 'react-hook-form'
@@ -14,11 +14,9 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/
 import { Input } from '@/components/ui/input'
 
 const Login = () => {
-    const {auth, setAuth} = useAuth()
+    const {setAuth} = useAuth()
     const [isPending, setIsPending] = useState(false)
     const navigate = useNavigate()
-    const location = useLocation()
-    const from = location.state?.from?.pathname || "/rmbdeals/dashboard"
     const form = useForm<LoginSchemaType>({
         resolver: zodResolver(LoginSchema),
         defaultValues:{
@@ -46,10 +44,10 @@ const Login = () => {
                 id: "login"
             })
             
-            if(auth?.user.role === "ADMIN"){
+            if(response.data?.user.role === "ADMIN"){
                 navigate("/rmbdeals/co/administrator/dashboard", {replace:true})
             }else{
-                navigate(from, {replace:true})
+                navigate("/rmbdeals/dashboard", {replace:true})
             }
         }catch(err:any){
             setIsPending(false)

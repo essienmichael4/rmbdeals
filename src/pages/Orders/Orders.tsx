@@ -1,9 +1,8 @@
-import { axios_instance } from "@/api/axios"
 import { DataTableColumnHeader } from "@/components/DataTable/ColumnHeader"
 import { DataTableViewOptions } from "@/components/DataTable/ColumnToggle"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import useAuth from "@/hooks/useAuth"
+import useAxiosToken from "@/hooks/useAxiosToken"
 import { Order } from "@/lib/types"
 import { useQuery } from "@tanstack/react-query"
 import {ColumnDef, SortingState, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel,getFilteredRowModel, useReactTable, } from "@tanstack/react-table"
@@ -13,17 +12,13 @@ import { Link } from "react-router-dom"
 const emptyData: any[]= []
 
 const Orders = () => {
-    const {auth} = useAuth()
+    const axios_instance_token = useAxiosToken()
     const [sorting, setSorting] = useState<SortingState>([])
     const [filtering, setFiltering] = useState("")
 
     const orders = useQuery<Order[]>({
         queryKey: ["orders"],
-        queryFn: async() => await axios_instance.get("/orders", {
-            headers: {
-                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
-            }
-        }).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get("/orders").then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{
@@ -68,7 +63,9 @@ const Orders = () => {
         accessorKey: "status",
         header:({column})=>(<DataTableColumnHeader column={column} title='Status' />),
         cell:({row}) => <div>
-            {row.original.status}
+            <span className={`${row.original.status === "HELD" && 'bg-gray-300'} ${row.original.status === "COMPLETED" && 'bg-emerald-300 text-emerald-700'} ${row.original.status === "CANCELLED" && 'bg-rose-300 text-rose-700'} ${row.original.status === "PENDING" && 'bg-blue-300 text-blue-700'} p-2 rounded-lg`}>
+                {row.original.status}
+            </span>
         </div>
     }]
 

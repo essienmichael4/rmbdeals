@@ -1,8 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
-import { axios_instance } from '@/api/axios'
-import useAuth from '@/hooks/useAuth'
 import {Tabs, TabsList, TabsTrigger} from '@/components/ui/tabs'
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select'
+import useAxiosToken from '@/hooks/useAxiosToken'
 
 type Period = {
     month: number,
@@ -19,15 +18,11 @@ interface Props{
 }
 
 const HistoryPeriodSelector = ({timeframe, period, setPeriod, setTimeFrame}:Props) => {
-    const {auth} = useAuth()
+    const axios_instance_token = useAxiosToken()
 
     const historyPeriodsQuery = useQuery<number[]>({
         queryKey: ["summary", "history", "periods"],
-        queryFn: async() => await axios_instance.get(`/history-periods`, {
-            headers: {
-                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
-            }
-        }).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/history-periods`,).then(res => res.data)
     })
     return (
         <div className='flex items-center gap-4'>

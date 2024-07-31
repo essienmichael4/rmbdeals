@@ -42,11 +42,17 @@ export type Order = {
     rmbEquivalence: number,
     recipient: string,
     status?: string,
-    createdAt?: string
+    createdAt?: string,
+    qrCode?: string,
+    orderBilling?:OrderBilling
 }
 
 export type OrderBilling = {
-
+    email: string
+    momoNumber:string
+    name: string
+    notes: string
+    whatsapp: string
 }
 
 export type User = {

@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import HistoryPeriodSelector from './HistoryPeriodSelector'
 import useAxiosToken from '@/hooks/useAxiosToken'
 
-const OrdersChart = () => {
+const AdminOrdersChart = () => {
     const axios_instance_token = useAxiosToken()
     const [timeframe, setTimeFrame] = useState<"MONTH" | "YEAR">("MONTH")
     const [period, setPeriod] = useState({
@@ -14,8 +14,8 @@ const OrdersChart = () => {
     })
     
     const historyDataQuery = useQuery<[]>({
-        queryKey: ["summary", "history", timeframe, period],
-        queryFn: async() => await axios_instance_token.get(`/history-data?timeframe=${timeframe}&month=${period.month}&year=${period.year}`).then(res => res.data)
+        queryKey: ["summary-admin", "history", timeframe, period],
+        queryFn: async() => await axios_instance_token.get(`/history-data-admin?timeframe=${timeframe}&month=${period.month}&year=${period.year}`).then(res => res.data)
     })
 
     const dataAvailable = historyDataQuery.data && historyDataQuery.data.length > 0
@@ -139,4 +139,4 @@ function TooltipRow({label, value, bgColor, textColor}:{
     )
 }
 
-export default OrdersChart
+export default AdminOrdersChart

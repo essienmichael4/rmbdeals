@@ -1,36 +1,50 @@
-import { axios_instance } from "@/api/axios"
-import useAuth from "@/hooks/useAuth"
 import { useQuery } from "@tanstack/react-query"
 import { X } from "lucide-react"
 import { Order } from "@/lib/types"
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button"
+import useAxiosToken from "@/hooks/useAxiosToken"
 
 const OrderItemAdmin = () => {
-    const {auth} = useAuth()
     const {id} =useParams()
+    const navigate = useNavigate()
+    const axios_instance_token = useAxiosToken()
 
     const order = useQuery<Order>({
-        queryKey: ["orders"],
-        queryFn: async() => await axios_instance.get(`/orders/${id}`, {
-            headers: {
-                'Authorization': `Bearer ${auth?.backendTokens.accessToken}`
-            }
-        }).then(res => res.data)
+        queryKey: ["orders-admin", id],
+        queryFn: async() => await axios_instance_token.get(`/orders-admin/${id}`).then(res => {
+            // console.log(res.data);
+            
+            return res.data})
     })
 
     return (
         <>
             <div className="mb-12 px-4 lg:px-0">
-                <div className="flex items-center gap-4">
-                    <h4 className="text-3xl font-semibold mb-2">Order ID: #{id}</h4>
-                    <span className="px-4 py-1 rounded-full bg-emerald-100 text-emerald-600 text-xs">{order.status}</span>
+                <div className="flex justify-between flex-wrap mb-4 lg:mb-0">
+                    <div className="flex gap-4 ">
+                        <button onClick={()=> navigate(-1)} className="flex items-center justify-center w-12 h-12 border rounded-full text-gray-400 hover:text-gray-600 hover:border-gray-600">
+                            &larr;
+                        </button>
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-4">
+                                <h4 className="text-3xl font-semibold mb-2">Order ID: #{id}</h4>
+                                <span className={`${order.data?.status === "HELD" && 'bg-gray-300'} ${order.data?.status === "COMPLETED" && 'bg-emerald-300 text-emerald-700'} ${order.data?.status === "CANCELLED" && 'bg-rose-300 text-rose-700'} ${order.data?.status === "PENDING" && 'bg-blue-300 text-blue-700'} py-1 px-4 rounded-full text-xs`}>{order.data?.status}</span>
+                            </div>
+                            <p className="mb-2">{order.data?.createdAt} at 6:30 from drafts</p>
+                        </div>
+                    </div>
+                    <div className="flex justify-self-end gap-2">
+                        <Button className="border bg-blue-700 hover:bg-blue-500">Pending</Button>
+                        <Button className="border bg-emerald-700 hover:bg-emerald-500">Completed</Button>
+                    </div>
                 </div>
-                <p className="mb-2">21/02/2024 at 6:30 from drafts</p>
                 <hr />
                 <div className='h-2 w-96 relative hidden lg:block bg-[#FFDD66] -top-1'></div>
+                
                 <div className="w-full lg:w-1/2 mx-auto border rounded-2xl mt-8 p-4">
                     <h5>Order Item</h5>
-                    <span className="px-4 py-1 rounded-full bg-emerald-100 text-emerald-600 text-xs">Completed</span>
+                    <span className={`${order.data?.status === "HELD" && 'bg-gray-300'} ${order.data?.status === "COMPLETED" && 'bg-emerald-300 text-emerald-700'} ${order.data?.status === "CANCELLED" && 'bg-rose-300 text-rose-700'} ${order.data?.status === "PENDING" && 'bg-blue-300 text-blue-700'} py-1 px-4 rounded-full text-xs`}>{order.data?.status}</span>
                     <div className="flex items-center justify-between">
                         <div className="mt-4 flex items-center gap-4">
                             <div className="w-16 h-16 bg-black rounded-lg">
@@ -42,35 +56,35 @@ const OrderItemAdmin = () => {
                             </div>
                         </div>
                         <p className="flex text-xl">
-                            <X  className="w-4"/> 100
+                            <X  className="w-4"/> 1
                         </p>
                     </div>
                 </div>
                 <div className="w-full lg:w-1/2 mx-auto border rounded-2xl mt-8 p-4">
                     <h5>Order Summary</h5>
-                    <span className="px-4 py-1 rounded-full bg-emerald-100 text-emerald-600 text-xs">Completed</span>
+                    <span className={`${order.data?.status === "HELD" && 'bg-gray-300'} ${order.data?.status === "COMPLETED" && 'bg-emerald-300 text-emerald-700'} ${order.data?.status === "CANCELLED" && 'bg-rose-300 text-rose-700'} ${order.data?.status === "PENDING" && 'bg-blue-300 text-blue-700'} py-1 px-4 rounded-full text-xs`}>{order.data?.status}</span>
                     <div className="flex items-center justify-between mt-4">
-                        <p className="font-bold">Cedi Amount:</p>
+                        <p className="font-bold">{order.data?.currency} Amount:</p>
                         <p className="">
-                            100.00
+                            {order.data?.amount}
                         </p>
                     </div>
                     <div className="flex items-center justify-between mt-2">
                         <p className="font-bold">RMB Equivalent:</p>
                         <p className="">
-                            100.00
+                            {order.data?.rmbEquivalence}
                         </p>
                     </div>
                     <div className="flex items-center justify-between mt-2">
                         <p className="font-bold">Rate:</p>
                         <p className="">
-                            100.00
+                            {order.data?.rate}
                         </p>
                     </div>
                     <div className="flex items-center justify-between my-2">
                         <p className="font-bold">Sub Total:</p>
                         <p className="">
-                            100.00
+                            {order.data?.amount}
                         </p>
                     </div>
                     <hr />
@@ -78,7 +92,7 @@ const OrderItemAdmin = () => {
                     <div className="flex items-center justify-between my-2">
                         <p className="font-bold">Total:</p>
                         <p className="">
-                            100.00
+                            {order.data?.amount}
                         </p>
                     </div>
                     <hr />
@@ -86,13 +100,13 @@ const OrderItemAdmin = () => {
                     <div className="flex items-center justify-between my-2">
                         <p className="font-bold">Recepient Name:</p>
                         <p className="">
-                            Adjoa Ofiriwaa
+                            {order.data?.recipient}
                         </p>
                     </div>
                     <div className="flex items-center justify-between my-2">
                         <p className="font-bold">Account Type:</p>
                         <p className="">
-                            Personal
+                            {order.data?.account}
                         </p>
                     </div>
                     <div className="flex items-center justify-between my-2">
@@ -104,18 +118,34 @@ const OrderItemAdmin = () => {
                     <div className="flex items-center justify-between my-2">
                         <p className="font-bold">Momo Number Paying From:</p>
                         <p className="">
-                            +xxx xxx xxxx xxx
+                            {order.data?.orderBilling?.momoNumber}
                         </p>
                     </div>
+                    <div className="flex flex-col my-4">
+                        <p className="font-bold underline">Delivery Note</p>
+                        <p className="">
+                            {order.data?.orderBilling?.notes ||"..."}
+                        </p>
+                    </div>
+                    <hr />
+                    <div className='h-1 w-36 relative hidden lg:block bg-[#FFDD66] -top-1'></div>
+                    <div className="flex flex-col mt-4 gap-2">
+                        <p className="font-bold">QR code</p>
+                        <div className="w-full rounded-2xl overflow-hidden">
+                            <img src={`http://localhost:5000/${order.data?.qrCode}`} className="w-full" alt="" />
+                        </div>
+                    </div>
+
+
                 </div>
                 <div className="w-full lg:w-1/2 mx-auto border rounded-2xl mt-8 p-4">
                     <h5>Billing Address</h5>
                     
                     <div className="mt-8">
-                        <h5 className="text-3xl italic">Sammuel Ayitey</h5>
-                        <p className="text-3xl italic">+xxx xxx xxx xxx</p>
+                        <h5 className="text-3xl italic">{order.data?.orderBilling?.name}</h5>
+                        <p className="text-3xl italic">{order.data?.orderBilling?.whatsapp}</p>
                     </div>
-                    <p className="mt-4 italic text-2xl">samuelayitey@gmail.com</p>
+                    <p className="mt-4 italic text-2xl">{order.data?.orderBilling?.email}</p>
                 </div>
             </div>
         </>

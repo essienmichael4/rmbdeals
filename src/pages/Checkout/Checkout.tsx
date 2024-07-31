@@ -17,9 +17,11 @@ import axios from 'axios'
 import { axios_instance } from '@/api/axios'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { RegisterUserCheckoutSchema, RegisterUserCheckoutSchemaType } from '@/schema/checkout'
+import useAxiosToken from '@/hooks/useAxiosToken'
 
 const Checkout = () => {
     const {auth, setAuth} = useAuth()
+    const axios_instance_token = useAxiosToken()
     const navigate = useNavigate()
     const {id} =useParams()
     const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
@@ -47,11 +49,7 @@ const Checkout = () => {
 
     const fetchOrder = async ()=>{
         if(auth){
-            const response = await axios_instance.get(`/orders/checkout/info/${id}`,{
-                headers: {
-                  Authorization: `Bearer ${auth?.backendTokens.accessToken}`
-                }
-            })
+            const response = await axios_instance_token.get(`/orders/checkout/info/${id}`)
             const order:Order = response.data
             return order
         }else{
@@ -68,17 +66,13 @@ const Checkout = () => {
 
     const addBilling = async (data:RegisterUserCheckoutSchemaType) => {
         if(auth){
-            const response = await axios_instance.post(`/orders/checkout/${id}`, {
+            const response = await axios_instance_token.post(`/orders/checkout/${id}`, {
                 name: data.name,
                 email: data.email,
                 momoNumber: data.momoNumber,
                 whatsapp: data.whatsapp,
                 notes: data.notes
-            }, {
-                headers: {
-                  Authorization: `Bearer ${auth?.backendTokens.accessToken}`
-                }
-            })
+            },)
 
             return response.data
         }else{
@@ -103,8 +97,6 @@ const Checkout = () => {
             toast.success(data.message, {
                 id: "billing"
             })
-
-            // setAuth({user: data.user, backendTokens: data.backendTokens})
 
             form.reset({
                 password:"",
