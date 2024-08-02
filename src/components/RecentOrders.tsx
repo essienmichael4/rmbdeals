@@ -20,7 +20,7 @@ const RecentOrders = () => {
         accessorKey: "id",
         header:({column})=>(<DataTableColumnHeader column={column} title='Order ID' />),
         cell:({row}) => <div>
-            <Link to={`${row.original.id}`}>
+            <Link to={`../rmbdeals/orders/${row.original.id}`}>
                 <span className='text-gray-400'>#</span>{row.original.id}
             </Link>
         </div>

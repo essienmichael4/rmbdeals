@@ -64,6 +64,7 @@ export type Stats = {
     totalOrders:number,
     successfulOrders: number,
     heldOrders: number,
+    cancelledOrders?: number,
     projectedExpense: {
         _sum: {
             amount: number
@@ -78,5 +79,17 @@ export type Stats = {
         _sum: {
             amount: number
         }
+    }
+}
+
+export type Revenue = {
+    completedRevenue:RevenueCurrency[],
+    heldRevenue: RevenueCurrency[]
+}
+
+export type RevenueCurrency = {
+    currency: string,
+    _sum: {
+        amount: number
     }
 }

@@ -1,22 +1,59 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { X } from "lucide-react"
 import { Order } from "@/lib/types"
 import { useParams, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import useAxiosToken from "@/hooks/useAxiosToken"
+import { toast } from "sonner"
+import axios from "axios"
 
 const OrderItemAdmin = () => {
     const {id} =useParams()
     const navigate = useNavigate()
     const axios_instance_token = useAxiosToken()
+    const queryClient = useQueryClient()
 
     const order = useQuery<Order>({
         queryKey: ["orders-admin", id],
-        queryFn: async() => await axios_instance_token.get(`/orders-admin/${id}`).then(res => {
-            // console.log(res.data);
-            
-            return res.data})
+        queryFn: async() => await axios_instance_token.get(`/orders-admin/${id}`).then(res => res.data)
     })
+
+    const updateOrder = async (status:string) => {
+        const response = await axios_instance_token.put(`/orders-admin/${id}`, {
+            status
+        },)
+
+        return response.data
+    }
+
+    const {mutate, isPending} = useMutation({
+        mutationFn: updateOrder,
+        onSuccess: ()=>{
+            toast.success("Order updated successfully", {
+                id: "order-update"
+            })
+
+            queryClient.invalidateQueries({queryKey: ["orders-admin", id]})
+            
+        },onError: (err:any) => {
+            if (axios.isAxiosError(err)){
+                toast.error(err?.response?.data?.error, {
+                    id: "order-update"
+                })
+            }else{
+                toast.error(`Something went wrong`, {
+                    id: "order-update"
+                })
+            }
+        }
+    })
+
+    const onOrderUpdate = (data:string)=>{
+        toast.loading("Updating order ...", {
+            id: "order-update"
+        })
+        mutate(data)
+    }
 
     return (
         <>
@@ -35,8 +72,9 @@ const OrderItemAdmin = () => {
                         </div>
                     </div>
                     <div className="flex justify-self-end gap-2">
-                        <Button className="border bg-blue-700 hover:bg-blue-500">Pending</Button>
-                        <Button className="border bg-emerald-700 hover:bg-emerald-500">Completed</Button>
+                        {order.data?.status !== "PENDEING" ? 
+                            order.data?.status !== "COMPLETED" && <Button className="border bg-blue-700 hover:bg-blue-500" onClick={()=>{onOrderUpdate("PENDING")}} disabled={isPending}>Pending</Button> : ""}
+                        {order.data?.status !== "COMPLETED" && <Button className="border bg-emerald-700 hover:bg-emerald-500" onClick={()=>{onOrderUpdate("COMPLETED")}} disabled={isPending}>Completed</Button>}
                     </div>
                 </div>
                 <hr />
