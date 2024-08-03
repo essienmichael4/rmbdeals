@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button"
 import ChangePassword from "./ChangePassword"
 import EditAccountDialog from "./EditAccountDialog"
 import useAuth from "@/hooks/useAuth"
+import AddAdminUser from "./AddAdminUser"
+import { PlusCircle } from "lucide-react"
 
 const AdminAccount = () => {
   const {auth} = useAuth()
@@ -16,9 +18,11 @@ const AdminAccount = () => {
           </div>
           <div className=" flex items-center gap-2 flex-wrap">
             <EditAccountDialog trigger={
-            <Button>Edit Profile</Button>} />
+              <Button className="border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white bg-transparent">Edit Profile</Button>} />
             <ChangePassword trigger={
-            <Button>Change Password</Button>} />
+              <Button className="border border-emerald-700 text-emerald-700 hover:bg-emerald-700 hover:text-white bg-transparent">Change Password</Button>} />
+            <AddAdminUser trigger={
+              <Button className="border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white bg-transparent"><PlusCircle  className="w-4 h-4 mr-2"/> Add Admin</Button>} />
           </div>
         </div>
         <hr />
