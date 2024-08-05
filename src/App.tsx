@@ -18,6 +18,8 @@ import OrdersAdmin from './pages/Admin/Orders/OrdersAdmin'
 import OrderItemAdmin from './pages/Admin/Orders/OrderItemAdmin'
 import AdminAccount from './pages/Admin/Account/AdminAccount'
 import Buy from './pages/Buy/Buy'
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
+import PasswordReset from './pages/PasswordReset/PasswordReset'
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path='rmbdeals/buy' element={<Buy />} />
           <Route path='rmbdeals/checkout/:id' element={<Checkout />} />
           <Route path='rmbdeals/login' element={<Login />} />
+          <Route path='rmbdeals/forgot-password' element={<ForgotPassword />} />
+          <Route path='rmbdeals/reset-password' element={<PasswordReset />} />
           <Route path='rmbdeals/register' element={<Register />} />
 
           {/* User Protected Routes */}

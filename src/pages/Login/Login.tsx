@@ -113,7 +113,7 @@ const Login = () => {
 
                             <div className='flex justify-between mt-1 mb-4'>
                                 <p className='text-xs 2xl:text-sm text-gray-300 mb-0'>Minimum 8 characters</p>
-                                <a className='text-blue-400 text-xs 2xl:text-sm'>forgot password</a>
+                                <Link to={'../rmbdeals/forgot-password'} className='text-blue-400 text-xs 2xl:text-sm'>forgot password</Link>
                             </div>
                             <button className='rounded-full flex items-center justify-center bg-blue-300 w-full text-white py-2 hover:bg-blue-500' disabled={isPending}> 
                                 {!isPending && "Login"}
