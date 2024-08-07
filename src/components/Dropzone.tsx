@@ -46,7 +46,7 @@ const Dropzone = ({handleFileChange}:Props) => {
 
       return (
         <div className="flex flex-col mt-4 gap-2">
-            <p className='text-xs 2xl:text-sm font-medium'>Alipay/WeChat QR code</p>
+            <p className='text-xs 2xl:text-sm font-bold'>Alipay/WeChat QR code</p>
             
             <div
                 {...getRootProps({

@@ -1,10 +1,11 @@
+import logo from '@/assets/logo.jpg'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '../../components/ui/form'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,  DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Input } from '../../components/ui/input'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import CurrencyPicker from '../../components/CurrencyPicker'
 import AccountPicker from '../../components/AccountPicker'
 import Footer from '@/components/Footer'
@@ -16,13 +17,10 @@ import { axios_instance } from '@/api/axios'
 import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
-import { Currency } from '@/lib/types'
-import useAxiosToken from '@/hooks/useAxiosToken'
 
 const Buy = () => {
     const {auth, setAuth} = useAuth()
     const navigate = useNavigate()
-    const axios_instance_token = useAxiosToken()
     const [qrcode, setQrcode] = useState<File | undefined>()
     const [isPending, setIsPending] = useState(false)
     const [rate, setRate] = useState<number>(0)
@@ -38,43 +36,6 @@ const Buy = () => {
             account: "personal"
         }
     })
-
-    useEffect( ()=>{
-        let isMounted = true
-        const controller = new AbortController()
-    
-        const getCurrency = async() => {
-          try{
-            if(auth){
-                const result = await axios_instance_token.get<Currency>("/currencies/user",{
-                    signal: controller.signal
-                }).then(res => res.data)
-                setRate(result.rate || 0)
-                isMounted && form.setValue("currency", result.currency || "GHS")
-            }else{
-                const result = await axios_instance.get<Currency>("/currencies/unknown",{
-                    signal: controller.signal
-                }).then(res => res.data)
-                setRate(result.rate || 0)
-                isMounted && form.setValue("currency", result.currency || "GHS")
-            }
-            
-          }catch(err){
-            if (axios.isAxiosError(err)){
-                toast.error(err?.response?.data?.error, {
-                    id: "login"
-                })
-            }
-          }
-        }
-    
-        getCurrency()
-    
-        return ()=>{
-          isMounted = false
-          controller.abort()
-        }
-      },[])
 
     const toggleNavbar = ()=>{
       setMobileDrawerOpen(!mobileDrawerOpen)
@@ -165,9 +126,17 @@ const Buy = () => {
         <>
             <header className={`${!auth && 'py-4'} w-full border-b sticky top-0 z-50 bg-white`}>
                 <nav className={`${!auth && 'py-2'} container px-4 lg:px-0 mx-auto flex justify-between items-center`}>
-                    <Link to={"../rmbdeals"}>
-                        <h1 className='text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
-                    </Link>
+                    {auth ? 
+                        <Link to={"../rmbdeals/dashboard"} className='flex gap-2 items-center'>
+                            <img src={logo} alt="logo" className='w-8 h-8'/>
+                            <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
+                        </Link>
+                        :
+                        <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                            <img src={logo} alt="logo" className='w-8 h-8'/>
+                            <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
+                        </Link>
+                    }
                     {auth && 
                         <div className='hidden lg:flex gap-8 h-full items-center'>
                             <NavLink to={"../rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
@@ -251,7 +220,7 @@ const Buy = () => {
                                     name="account"
                                     render={() =>(
                                         <FormItem className='flex-1 flex flex-col w-full'>
-                                            <FormLabel className='text-xs 2xl:text-sm'>Account Type</FormLabel>
+                                            <FormLabel className='text-xs 2xl:text-sm font-bold'>Account Type</FormLabel>
                                             <FormControl>
                                                 <AccountPicker onChange={handleAccountChange}/>
                                             </FormControl>
@@ -266,9 +235,9 @@ const Buy = () => {
                                     name="currency"
                                     render={() =>(
                                         <FormItem className='flex flex-col w-full'>
-                                            <FormLabel className='text-xs 2xl:text-sm'>Transaction Currency</FormLabel>
+                                            <FormLabel className='text-xs 2xl:text-sm font-bold'>Transaction Currency</FormLabel>
                                             <FormControl>
-                                                <CurrencyPicker onChange={handleCurrencyChange}/>
+                                                <CurrencyPicker onChange={handleCurrencyChange} />
                                             </FormControl>
                                         </FormItem>
                                     )} 
@@ -280,7 +249,7 @@ const Buy = () => {
                                     name="amount"
                                     render={({field}) =>(
                                         <FormItem className='w-full lg:w-2/3'>
-                                            <FormLabel className='text-xs 2xl:text-sm'>Transacted Amount</FormLabel>
+                                            <FormLabel className='text-xs 2xl:text-sm font-bold'>Transacted Amount</FormLabel>
                                             <FormControl>
                                                 <Input {...field}  type='number' min={0} placeholder='0' onChange={(e)=>handleInputChange(Number(e.target.value))}/>
                                             </FormControl>
@@ -307,7 +276,7 @@ const Buy = () => {
                                 name="recipient"
                                 render={({field}) =>(
                                     <FormItem className='flex mt-4 flex-col'>
-                                        <FormLabel className='mr-2 text-xs 2xl:text-sm'>Recipient Name</FormLabel>
+                                        <FormLabel className='mr-2 text-xs 2xl:text-sm font-bold'>Recipient Name</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>

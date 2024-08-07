@@ -1,3 +1,4 @@
+import logo from '@/assets/logo.jpg'
 import { axios_instance } from "@/api/axios"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormDescription } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -64,9 +65,10 @@ const PasswordReset = () => {
         <>
             <header className='w-full py-4 border-b absolute z-50'>
                 <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                    <Link to={"../rmbdeals"}>
-                        <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
-                    </Link>
+                <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                    <img src={logo} alt="logo" className='w-8 h-8'/>
+                    <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
+                </Link>
                 </nav>
             </header>
             <div className='mx-auto container px-4 lg:px-0'>

@@ -1,4 +1,5 @@
 import { LogOut, Menu, User, X } from 'lucide-react'
+import logo from '../assets/logo.jpg'
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,  DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -17,9 +18,10 @@ const InAppHeader = () => {
   return (
     <header className='w-full sticky top-0 border-b bg-white z-50'>
       <nav className="container px-4 py-8 lg:py-0 lg:px-0 mx-auto flex justify-between items-center">
-        <Link to={"../rmbdeals/dashboard"}>
-          <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
-        </Link>
+        <Link to={"../rmbdeals/dashboard"} className='flex gap-2 items-center'>
+            <img src={logo} alt="logo" className='w-8 h-8 rounded-full'/>
+            <h1 className='text-2xl lg:text-3xl font-bold text-black'>RMB Deals</h1>
+          </Link>
         <div className='hidden lg:flex gap-8 h-full items-center'>
           <NavLink to={"rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
           <NavLink to={"rmbdeals/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>

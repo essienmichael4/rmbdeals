@@ -100,7 +100,7 @@ const AdminOrdersChart = () => {
                 {
                     !dataAvailable && 
                     <div className='bg-gray-100 rounded-lg h-[300px] flex flex-col items-center justify-center'>
-                        No orders found for the selected account
+                        <p className='text-center'>No orders found for the selected account</p>
                         <p className="text-sm text-muted-foreground">Try making a new order</p>
                     </div>
                 }

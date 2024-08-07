@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import hero from '../../assets/hero.jpg'
+import logo from '@/assets/logo.jpg'
 import Footer from '@/components/Footer'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -63,8 +64,9 @@ const Login = () => {
     <>
         <header className='w-full py-4 border-b absolute z-50'>
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <Link to={"../rmbdeals"}>
-                    <h1 className='text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
+                <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                    <img src={logo} alt="logo" className='w-8 h-8 rounded-full'/>
+                    <h1 className='text-2xl lg:text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
                 </Link>
                 <div className='flex gap-4 lg:gap-8'>
                     <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../rmbdeals/buy"}>Buy</Link>

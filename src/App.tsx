@@ -20,6 +20,8 @@ import AdminAccount from './pages/Admin/Account/AdminAccount'
 import Buy from './pages/Buy/Buy'
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import PasswordReset from './pages/PasswordReset/PasswordReset'
+import NotFound from './pages/NotFound/NotFound'
+import Unauthorized from './pages/NotFound/Unauthorized'
 
 function App() {
   return (
@@ -59,6 +61,9 @@ function App() {
           </Route>
         </Route>
 
+        {/* Catch all other routes */}
+        <Route path='*' element={<NotFound />} />
+        <Route path='unauthorized' element={<Unauthorized />} />
       </Routes>
     </>
   )

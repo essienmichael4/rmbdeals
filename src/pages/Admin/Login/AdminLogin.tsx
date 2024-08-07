@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import hero from '../../../assets/hero.jpg'
+import logo from '@/assets/logo.jpg'
 import Footer from '@/components/Footer'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,7 +19,7 @@ const AdminLogin = () => {
     const [isPending, setIsPending] = useState(false)
     const navigate = useNavigate()
     const location = useLocation()
-    const from = location.state?.from?.pathname || "/rmbdeals/co/administrators/dashboard"
+    const from = location.state?.from?.pathname || "/rmbdeals/co/administrator/dashboard"
     const form = useForm<LoginSchemaType>({
         resolver: zodResolver(LoginSchema),
         defaultValues:{
@@ -60,7 +61,8 @@ const AdminLogin = () => {
     <>
         <header className='w-full py-4 border-b absolute z-50'>
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <Link to={"../rmbdeals"}>
+                <Link to={"../rmbdeals/co/administrator"} className='flex gap-2 items-center'>
+                    <img src={logo} alt="logo" className='w-8 h-8 rounded-full'/>
                     <h1 className='text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
                 </Link>
             </nav>

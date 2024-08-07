@@ -4,28 +4,76 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Button } from './ui/button'
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './ui/command'
 import { cn } from '../lib/utils'
-import { axios_instance } from '@/api/axios'
+import { axios_instance, axios_instance_token } from '@/api/axios'
 import { useQuery } from '@tanstack/react-query'
 import { Currency } from '@/lib/types'
+import useAuth from '@/hooks/useAuth'
 
 interface Props {
-    onChange: (value: string, rate:number)=>void
+    onChange: (value: string, rate:number)=>void,
 }
 
 const CurrencyPicker = ({ onChange }:Props) => {
+    const {auth} = useAuth()
     const [open, setOpen] = useState(false)
-    const [value, setValue] = useState<string>("GHS")
+    const [value, setValue] = useState<string>("")
     const [rate, setRate] = useState<number>(0)
 
-    useEffect(()=>{
+    useEffect( ()=>{
+        let isMounted = true
+    
+        const getCurrency = async() => {
+            if(auth){
+                const result = await axios_instance_token.get<Currency>("/currencies/user").then(res => res.data)
+                setRate(result.rate || 0)
+              isMounted && setValue(result.currency)
+            }else{
+                const result = await axios_instance.get<Currency>("/currencies/unknown").then(res => res.data)
+                setRate(result.rate || 0)
+              isMounted && setValue(result.currency)
+            }
+        }
+    
+        getCurrency()
+    
+        return ()=>{
+          isMounted = false
+        //   controller.abort()
+        }
+      },[])
+
+    useEffect(()=>{  
         if(!value) return
         onChange(value, rate)
     }, [onChange, value, rate])
+
+    // const getCurrency = async() => {
+    //     if(auth){
+    //           const result = await axios_instance_token.get<Currency>("/currencies/user",{
+    //               // signal: controller.signal
+    //           }).then(res => res.data)
+    //         //   setRate(result.rate || 0)
+    //         setValue(result.currency)
+    //         return result
+    //       }else{
+    //           const result = await axios_instance.get<Currency>("/currencies/unknown",{
+    //               // signal: controller.signal
+    //           }).then(res => res.data)
+    //         //   setRate(result.rate || 0)
+    //         setValue(result.currency)
+    //           return result
+    //       }
+    //   }
 
     const currenciesQuery = useQuery<Currency[]>({
         queryKey: ["currencies"],
         queryFn: async() => await axios_instance.get("/currencies").then(res => res.data)
     })
+
+    // const currencyQuery = useQuery<Currency>({
+    //     queryKey: ["currency"],
+    //     queryFn: async() => await getCurrency()
+    // })
 
     const selectedCurrency = currenciesQuery.data?.find((currency:Currency)=> currency.currency === value)
 

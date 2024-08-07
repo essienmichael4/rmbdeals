@@ -5,7 +5,7 @@ export const CurrencySchema = z.object({
     currency: z.string({
         message: "Currency must not be empty"
     }),
-    rate: z.coerce.number().positive().multipleOf(0.01),
+    rate: z.coerce.number().positive().min(0.000000001),
     description: z.string().min(2, {
         message: "Currency description is needed."
     })
@@ -16,7 +16,7 @@ export const UpdateCurrencySchema = z.object({
     currency: z.string({
         message: "Currency must not be empty"
     }),
-    rate: z.coerce.number().positive().multipleOf(0.000000001).optional(),
+    rate: z.coerce.number().positive().min(0.000000001).optional(),
     description: z.string().min(2, {
         message: "Currency description is needed."
     }).optional().or(z.literal(''))

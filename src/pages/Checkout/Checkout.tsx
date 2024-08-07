@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import logo from '@/assets/logo.jpg'
 import CheckoutLogin from './CheckoutLogin'
 import Footer from '@/components/Footer'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '../../components/ui/form'
@@ -133,9 +134,17 @@ const Checkout = () => {
         <>
             <header className={`${!auth && 'py-4'} w-full border-b sticky top-0 z-50 bg-white`}>
                 <nav className={`${!auth && 'py-2'} container px-4 lg:px-0 mx-auto flex justify-between items-center`}>
-                    <Link to={"../rmbdeals"}>
-                        <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
-                    </Link>
+                    {auth ? 
+                        <Link to={"../rmbdeals/dashboard"} className='flex gap-2 items-center'>
+                            <img src={logo} alt="logo" className='w-8 h-8'/>
+                            <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
+                        </Link>
+                        :
+                        <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                            <img src={logo} alt="logo" className='w-8 h-8'/>
+                            <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
+                        </Link>
+                    }
                     {auth && 
                         <div className='hidden lg:flex gap-8 h-full items-center'>
                             <NavLink to={"../rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
@@ -226,7 +235,7 @@ const Checkout = () => {
                                         name="name"
                                         render={({field}) =>(
                                             <FormItem className='flex-1 flex flex-col w-full'>
-                                                <FormLabel className='text-xs'>Name</FormLabel>
+                                                <FormLabel className='text-xs 2xl:text-sm font-bold'>Name</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -238,7 +247,7 @@ const Checkout = () => {
                                         name="whatsapp"
                                         render={({field}) =>(
                                             <FormItem className='flex flex-col w-full'>
-                                                <FormLabel className='text-xs'>WhatsApp Number</FormLabel>
+                                                <FormLabel className='text-xs 2xl:text-sm font-bold'>WhatsApp Number</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -250,7 +259,7 @@ const Checkout = () => {
                                         name="email"
                                         render={({field}) =>(
                                             <FormItem className='flex flex-col w-full'>
-                                                <FormLabel className='text-xs'>Email Address</FormLabel>
+                                                <FormLabel className='text-xs 2xl:text-sm font-bold'>Email Address</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -263,7 +272,7 @@ const Checkout = () => {
                                         name="momoNumber"
                                         render={({field}) =>(
                                             <FormItem className='flex-1 flex flex-col w-full'>
-                                                <FormLabel className='text-xs'>Momo Number Paying From</FormLabel>
+                                                <FormLabel className='text-xs 2xl:text-sm font-bold'>Momo Number Paying From</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -277,7 +286,7 @@ const Checkout = () => {
                                             name="password"
                                             render={({field}) =>(
                                                 <FormItem className='flex flex-col w-full'>
-                                                    <FormLabel>Account Password</FormLabel>
+                                                    <FormLabel className='text-xs 2xl:text-sm font-bold'>Account Password</FormLabel>
                                                     <FormControl>
                                                         <Input {...field} />
                                                     </FormControl>
@@ -301,7 +310,7 @@ const Checkout = () => {
                                     name="notes"
                                     render={({field}) =>(
                                         <FormItem className='flex mt-4 flex-col'>
-                                            <FormLabel className='mr-2'>Order Note (Optional)</FormLabel>
+                                            <FormLabel className='mr-2 text-xs 2xl:text-sm font-bold'>Order Note (Optional)</FormLabel>
                                             <FormControl>
                                                 <Textarea {...field} />
                                             </FormControl>

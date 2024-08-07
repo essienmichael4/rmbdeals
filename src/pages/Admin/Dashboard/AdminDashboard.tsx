@@ -17,7 +17,7 @@ const AdminDashboard = () => {
     <>
       <div className="w-full px-4">
         <div className='flex items-center justify-between gap-8 mb-4'>
-          <h2 className='text-3xl font-semibold'>Dashboard</h2>
+          <h2 className='text-xl lg:text-3xl font-semibold'>Dashboard</h2>
           <DateRangePicker
             initialDateFrom={dateRange.from}
             initialDateTo={dateRange.to}
