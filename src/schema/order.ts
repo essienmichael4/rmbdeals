@@ -5,7 +5,7 @@ export const OrderSchema = z.object({
     currency: z.string({
         message: "Currency must not be empty"
     }),
-    amount: z.coerce.number().positive().multipleOf(0.01),
+    amount: z.coerce.number().positive().min(0.000000001),
     recipient: z.string().min(2, {
         message: "Recipient name must be a valid name."
     })

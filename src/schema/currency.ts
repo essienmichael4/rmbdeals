@@ -11,6 +11,12 @@ export const CurrencySchema = z.object({
     })
 })
 
+export const SetUserCurrencySchema = z.object({
+    currency: z.string({
+        message: "Currency must not be empty"
+    }),
+})
+
 export const UpdateCurrencySchema = z.object({
     label: z.string().optional().or(z.literal('')),
     currency: z.string({
@@ -24,3 +30,4 @@ export const UpdateCurrencySchema = z.object({
 
 export type CurrencySchemaType = z.infer<typeof CurrencySchema>
 export type UpdateCurrencySchemaType = z.infer<typeof UpdateCurrencySchema>
+export type SetUserCurrencySchemaType = z.infer<typeof SetUserCurrencySchema>

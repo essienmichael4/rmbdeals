@@ -11,13 +11,14 @@ import useAuth from '@/hooks/useAuth'
 
 interface Props {
     onChange: (value: string, rate:number)=>void,
+    rate:number,
+    setRate: (rate:number)=>void
 }
 
-const CurrencyPicker = ({ onChange }:Props) => {
+const CurrencyPicker = ({ onChange, rate, setRate }:Props) => {
     const {auth} = useAuth()
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState<string>("")
-    const [rate, setRate] = useState<number>(0)
 
     useEffect( ()=>{
         let isMounted = true
@@ -38,7 +39,6 @@ const CurrencyPicker = ({ onChange }:Props) => {
     
         return ()=>{
           isMounted = false
-        //   controller.abort()
         }
       },[])
 
@@ -47,33 +47,10 @@ const CurrencyPicker = ({ onChange }:Props) => {
         onChange(value, rate)
     }, [onChange, value, rate])
 
-    // const getCurrency = async() => {
-    //     if(auth){
-    //           const result = await axios_instance_token.get<Currency>("/currencies/user",{
-    //               // signal: controller.signal
-    //           }).then(res => res.data)
-    //         //   setRate(result.rate || 0)
-    //         setValue(result.currency)
-    //         return result
-    //       }else{
-    //           const result = await axios_instance.get<Currency>("/currencies/unknown",{
-    //               // signal: controller.signal
-    //           }).then(res => res.data)
-    //         //   setRate(result.rate || 0)
-    //         setValue(result.currency)
-    //           return result
-    //       }
-    //   }
-
     const currenciesQuery = useQuery<Currency[]>({
         queryKey: ["currencies"],
         queryFn: async() => await axios_instance.get("/currencies").then(res => res.data)
     })
-
-    // const currencyQuery = useQuery<Currency>({
-    //     queryKey: ["currency"],
-    //     queryFn: async() => await getCurrency()
-    // })
 
     const selectedCurrency = currenciesQuery.data?.find((currency:Currency)=> currency.currency === value)
 
@@ -102,6 +79,7 @@ const CurrencyPicker = ({ onChange }:Props) => {
                                         <CommandItem key={currency.currency} onSelect={()=>{
                                             setValue(currency.currency)
                                             setRate(currency.rate)
+                                            
                                             onChange(currency.currency, currency.rate)
                                             setOpen(prev=>!prev)
                                         }}>

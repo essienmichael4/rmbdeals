@@ -17,9 +17,11 @@ import { axios_instance } from '@/api/axios'
 import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
+import useAxiosToken from '@/hooks/useAxiosToken'
 
 const Buy = () => {
     const {auth, setAuth} = useAuth()
+    const axios_instance_token = useAxiosToken()
     const navigate = useNavigate()
     const [qrcode, setQrcode] = useState<File | undefined>()
     const [isPending, setIsPending] = useState(false)
@@ -41,12 +43,13 @@ const Buy = () => {
       setMobileDrawerOpen(!mobileDrawerOpen)
     }
 
-    const handleCurrencyChange = useCallback((value:string, rate:number)=>{
+    const handleCurrencyChange = (value:string, rate:number)=>{
         form.setValue("currency", value)
         setRate(rate)
+        
         const rmbEquivalence = Number(amount) * rate
         setRMB(rmbEquivalence)
-    }, [form])
+    }
 
     const handleAccountChange = useCallback((value:"personal" | "supplier")=>{
         form.setValue("account", value)
@@ -55,6 +58,7 @@ const Buy = () => {
     const handleInputChange = (value:number)=>{
         const rmbEquivalence = value * rate
         setAmount(value)
+        form.setValue("amount", value)
         setRMB(rmbEquivalence)
     }
     
@@ -82,15 +86,14 @@ const Buy = () => {
             formData.append("order", JSON.stringify(data))
 
             if(auth){
-                const response = await axios_instance.post("/orders", formData, {
+                const response = await axios_instance_token.post("/orders", formData, {
                     headers: {
                       "content-type": "multipart/form-data",
-                      Authorization: `Bearer ${auth?.backendTokens.accessToken}`
                     }
                 })
                 form.reset()
                 const orderId:number = response.data.order.id
-                console.log(response.data)
+
                 setIsPending(false)
                 toast.success(response.data.message, {
                     id: "create-order"
@@ -210,11 +213,22 @@ const Buy = () => {
                             <div className='flex justify-between mb-2'>
                                 <h5 className='text-xl font-bold'>Order Details</h5>
 
-                                <p className="text-xl">Current Rate: {rate}</p>
                             </div>
                             <hr />
                             <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
+                            <div className='flex flex-col md:flex-row gap-4 mt-4'>
+                                <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
+                                    <p className='text-xs 2xl:text-sm font-bold'>Current Rate</p>
+                                    <p className='text-xl'>{rate}</p>
+                                </div>
+
+                                <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
+                                    <p className='text-xs 2xl:text-sm font-bold'>RMB Equivalence</p>
+                                    <p className='text-xl'>¥ {rmb.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:8})}</p>
+                                </div>
+                            </div>
                             <div className='mt-4 flex items-center gap-4 w-full'>
+
                                 <FormField
                                     control={form.control}
                                     name="account"
@@ -237,7 +251,7 @@ const Buy = () => {
                                         <FormItem className='flex flex-col w-full'>
                                             <FormLabel className='text-xs 2xl:text-sm font-bold'>Transaction Currency</FormLabel>
                                             <FormControl>
-                                                <CurrencyPicker onChange={handleCurrencyChange} />
+                                                <CurrencyPicker onChange={handleCurrencyChange} rate={rate} setRate={setRate} />
                                             </FormControl>
                                         </FormItem>
                                     )} 
@@ -247,20 +261,15 @@ const Buy = () => {
                                 <FormField 
                                     control={form.control}
                                     name="amount"
-                                    render={({field}) =>(
-                                        <FormItem className='w-full lg:w-2/3'>
+                                    render={() =>(
+                                        <FormItem className='w-full'>
                                             <FormLabel className='text-xs 2xl:text-sm font-bold'>Transacted Amount</FormLabel>
                                             <FormControl>
-                                                <Input {...field}  type='number' min={0} placeholder='0' onChange={(e)=>handleInputChange(Number(e.target.value))}/>
+                                                <Input type='number' min={0} placeholder='0' onChange={(e)=>handleInputChange(Number(e.target.value))}/>
                                             </FormControl>
                                         </FormItem>
                                     )} 
                                 />
-
-                                <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
-                                    <p className='text-xs 2xl:text-sm font-bold'>RMB Equivalence</p>
-                                    <p className='text-xl'>¥ {rmb}</p>
-                                </div>
                             </div>
 
                             <div className="mb-2 mt-4">

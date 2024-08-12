@@ -22,6 +22,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import PasswordReset from './pages/PasswordReset/PasswordReset'
 import NotFound from './pages/NotFound/NotFound'
 import Unauthorized from './pages/NotFound/Unauthorized'
+import Wizard from './pages/Wizard/Wizard'
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
               <Route path='rmbdeals/orders' element={<Orders />} />
               <Route path='rmbdeals/orders/:id' element={<OrderItem />} />
               <Route path='rmbdeals/account' element={<Account />} />
+              <Route path='rmbdeals/wizard' element={<Wizard />} />
             </Route> 
           </Route> 
         </Route>

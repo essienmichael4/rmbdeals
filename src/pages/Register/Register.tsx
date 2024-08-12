@@ -18,7 +18,7 @@ const Register = () => {
     const {setAuth} = useAuth()
     const [isPending, setIsPending] = useState(false)
     const navigate = useNavigate()
-    const from = "/rmbdeals/dashboard"
+    const from = "/rmbdeals/wizard"
     const form = useForm<RegisterSchemaType>({
         resolver: zodResolver(RegisterSchema),
         defaultValues:{
