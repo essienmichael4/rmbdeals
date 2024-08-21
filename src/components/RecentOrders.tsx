@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { Order } from '@/lib/types'
+import { Currency, Order } from '@/lib/types'
 import { DataTableColumnHeader } from './DataTable/ColumnHeader'
 import { ColumnDef, getCoreRowModel, flexRender, useReactTable } from '@tanstack/react-table'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
 import useAxiosToken from '@/hooks/useAxiosToken'
+import { FormattedDate } from '@/lib/helper'
 
 const emptyData: any[]= []
 
@@ -14,6 +15,11 @@ const RecentOrders = () => {
     const orders = useQuery<Order[]>({
         queryKey: ["summary", "orders"],
         queryFn: async() => await axios_instance_token.get(`/recent-orders`).then(res => res.data)
+    })
+
+    const currencies = useQuery<Currency[]>({
+        queryKey: ["currencies"],
+        queryFn: async() => await axios_instance_token.get(`/currencies`).then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{
@@ -27,9 +33,14 @@ const RecentOrders = () => {
     },{
         accessorKey: "createdAt",
         header:({column})=>(<DataTableColumnHeader column={column} title='Date' />),
-        cell:({row}) => <div>
-            {row.original.createdAt}
-        </div>
+        cell:({row}) => {
+            const date = new Date(row.original.createdAt as string)
+            const formattedDate = FormattedDate(date)
+            
+            return <div className='text-muted-foreground'>
+                {formattedDate}
+            </div>
+        }
     },{
         accessorKey: "product",
         header:({column})=>(<DataTableColumnHeader column={column} title='Product' />),
@@ -39,9 +50,13 @@ const RecentOrders = () => {
     },{
         accessorKey: "amount",
         header:({column})=>(<DataTableColumnHeader column={column} title='Price' />),
-        cell:({row}) => <div>
-            {row.original.amount}
-        </div>
+        cell:({row}) => {
+            const currency = currencies.data?.find(val => row.original.currency === val.currency)
+
+            return <div>
+                {currency?.label} {row.original.amount}
+            </div>
+        }
     },{
         accessorKey: "recipient",
         header:({column})=>(<DataTableColumnHeader column={column} title='Recipient' />),

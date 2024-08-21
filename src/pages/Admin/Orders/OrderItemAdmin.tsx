@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import useAxiosToken from "@/hooks/useAxiosToken"
 import { toast } from "sonner"
 import axios from "axios"
+import { FormattedDate, FormattedTime } from "@/lib/helper"
 
 const OrderItemAdmin = () => {
     const {id} =useParams()
@@ -68,7 +69,7 @@ const OrderItemAdmin = () => {
                                 <h4 className="text-3xl font-semibold mb-2">Order ID: #{id}</h4>
                                 <span className={`${order.data?.status === "HELD" && 'bg-gray-300'} ${order.data?.status === "COMPLETED" && 'bg-emerald-300 text-emerald-700'} ${order.data?.status === "CANCELLED" && 'bg-rose-300 text-rose-700'} ${order.data?.status === "PENDING" && 'bg-blue-300 text-blue-700'} py-1 px-4 rounded-full text-xs`}>{order.data?.status}</span>
                             </div>
-                            <p className="mb-2">{order.data?.createdAt} at 6:30 from drafts</p>
+                            <p className="mb-2 text-xs lg:text-sm text-muted-foreground">{FormattedDate(new Date(order.data?.createdAt as string))} at {FormattedTime(new Date(order.data?.createdAt as string))} from drafts</p>
                         </div>
                     </div>
                     <div className="flex justify-self-end gap-2">
@@ -104,7 +105,7 @@ const OrderItemAdmin = () => {
                     <div className="flex items-center justify-between mt-4">
                         <p className="font-bold">{order.data?.currency} Amount:</p>
                         <p className="">
-                            {order.data?.amount}
+                           {order.data?.amount}
                         </p>
                     </div>
                     <div className="flex items-center justify-between mt-2">
@@ -154,9 +155,9 @@ const OrderItemAdmin = () => {
                         </p>
                     </div>
                     <div className="flex items-center justify-between my-2">
-                        <p className="font-bold">Momo Number Paying From:</p>
+                        <p className="font-bold">Name on Momo Account:</p>
                         <p className="">
-                            {order.data?.orderBilling?.momoNumber}
+                            {order.data?.orderBilling?.momoName}
                         </p>
                     </div>
                     <div className="flex flex-col my-4">

@@ -17,7 +17,7 @@ const Rate = () => {
             <div className='h-2 w-36 lg:w-96 relative block bg-[#FFDD66] -top-1'></div>
             <div className="flex flex-wrap gap-4">
                 {rate.data?.map((currency:Currency, i:number)=>{
-                    return <div className="py-8 px-2" key={i}>
+                    return <div className="py-4 md:py-8 px-2" key={i}>
                     <div className="flex gap-4 flex-col">
                         <p  className="font-bold">{currency.description}</p>
                         <p className="text-4xl">{currency.label} {currency.rate}</p>

@@ -74,10 +74,12 @@ const AdminStatistics = ({from, to}:Props) => {
                             <div className='mt-4 flex flex-col gap-4'>
                                 {
                                     revenue.data?.completedRevenue.map((revenue:RevenueCurrency, i:number) =>{
+                                        const currency = currencies.data?.find(val => revenue.currency === val.currency)
                                         return (
                                             <div key={i} className='flex items-center justify-between'>
                                                 <h5 className='text-lg'>{revenue.currency}</h5>
                                                 <div className='flex gap-2'>
+                                                    <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency?.label}</div>
                                                     <div className='flex items-center justify-center text-lg px-2 bg-black text-white rounded-sm'>{revenue._sum.amount}</div>
                                                 </div>
                                             </div>
@@ -97,30 +99,18 @@ const AdminStatistics = ({from, to}:Props) => {
                             <div className='mt-4 flex flex-col gap-4'>
                                 {
                                     revenue.data?.heldRevenue.map((revenue:RevenueCurrency, i:number) =>{
+                                        const currency = currencies.data?.find(val => revenue.currency === val.currency)
                                         return (
                                             <div key={i} className='flex items-center justify-between'>
                                                 <h5 className='text-lg text-white'>{revenue.currency}</h5>
                                                 <div className='flex gap-2'>
+                                                    <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency?.label}</div>
                                                     <div className='flex items-center justify-center text-lg px-2 bg-white text-black rounded-sm'>{revenue._sum.amount}</div>
                                                 </div>
                                             </div>
                                         )
                                     })
                                 }
-                                {/* <div className='flex items-center justify-between'>
-                                    <h5 className='text-lg text-white'>Ghana cedis</h5>
-                                    <div className='flex gap-2'>
-                                        <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>¢</div>
-                                        <div className='flex items-center justify-center text-lg px-2 bg-white text-black rounded-sm'>0.444</div>
-                                    </div>
-                                </div>
-                                <div className='flex items-center justify-between'>
-                                    <h5 className='text-lg text-white'>Ghana cedis</h5>
-                                    <div className='flex gap-2'>
-                                        <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>¢</div>
-                                        <div className='flex items-center justify-center text-lg px-2 bg-white text-black rounded-sm'>0.444</div>
-                                    </div>
-                                </div> */}
                             </div>
                         </div>
                     </div>

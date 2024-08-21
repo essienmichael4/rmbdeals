@@ -34,7 +34,7 @@ const Checkout = () => {
             notes: "",
             email: auth ? auth.user.email : "",
             whatsapp: "",
-            momoNumber: "",
+            momoName: "",
         }
     })
 
@@ -70,7 +70,7 @@ const Checkout = () => {
             const response = await axios_instance_token.post(`/orders/checkout/${id}`, {
                 name: data.name,
                 email: data.email,
-                momoNumber: data.momoNumber,
+                momoName: data.momoName,
                 whatsapp: data.whatsapp,
                 notes: data.notes
             },)
@@ -80,7 +80,7 @@ const Checkout = () => {
             const response = await axios_instance.post(`/orders/checkout-register/${id}`, {
                 name: data.name,
                 email: data.email,
-                momoNumber: data.momoNumber,
+                momoName: data.momoName,
                 whatsapp: data.whatsapp,
                 notes: data.notes,
                 password: data.password
@@ -105,7 +105,7 @@ const Checkout = () => {
                 notes: "",
                 email: auth ? auth.user.email : "",
                 whatsapp: "",
-                momoNumber: "",
+                momoName: "",
             })
 
             navigate("../rmbdeals/dashboard")
@@ -269,10 +269,10 @@ const Checkout = () => {
                                     />
                                     <FormField 
                                         control={form.control}
-                                        name="momoNumber"
+                                        name="momoName"
                                         render={({field}) =>(
                                             <FormItem className='flex-1 flex flex-col w-full'>
-                                                <FormLabel className='text-xs 2xl:text-sm font-bold'>Momo Number Paying From</FormLabel>
+                                                <FormLabel className='text-xs 2xl:text-sm font-bold'>Name on Momo Account</FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>

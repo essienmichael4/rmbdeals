@@ -6,9 +6,9 @@ const useRefreshToken = () => {
     const {auth, setAuth} = useAuth()
 
     const refresh = async ()=>{
-        const response = await axios.get(`/auth/refresh-token`, {
+        const response = await axios.get(`http://localhost:5000/api/v1/auth/refresh-token`, {
             headers: {
-                'Authorization': `Bearer ${auth?.backendTokens.refreshToken}`
+                'Authorization': `Refresh ${auth?.backendTokens.refreshToken}`
             }
         })
 

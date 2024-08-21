@@ -5,13 +5,18 @@ import Process from '../../components/Process'
 import Footer from '../../components/Footer'
 import Faqs from '@/components/Faqs'
 import Rate from '@/components/Rate'
+import { useState } from 'react'
+import Announcement from '@/components/Announcement'
 
 const Home = () => {
+  const [height, setHeight] = useState<number>()
+
   return (
     <div className='w-full overflow-x-hidden'>
+      <Announcement setHeight={setHeight}/>
         <Header />
         <div className='mx-auto container'>
-            <Hero />
+            <Hero height={height}/>
             <Rate />
             <Features />
             <Process />

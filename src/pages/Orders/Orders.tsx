@@ -3,7 +3,8 @@ import { DataTableViewOptions } from "@/components/DataTable/ColumnToggle"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import useAxiosToken from "@/hooks/useAxiosToken"
-import { Order } from "@/lib/types"
+import { FormattedDate } from "@/lib/helper"
+import { Currency, Order } from "@/lib/types"
 import { useQuery } from "@tanstack/react-query"
 import {ColumnDef, SortingState, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel,getFilteredRowModel, useReactTable, } from "@tanstack/react-table"
 import { useState } from "react"
@@ -21,6 +22,11 @@ const Orders = () => {
         queryFn: async() => await axios_instance_token.get("/orders").then(res => res.data)
     })
 
+    const currencies = useQuery<Currency[]>({
+        queryKey: ["currencies"],
+        queryFn: async() => await axios_instance_token.get(`/currencies`).then(res => res.data)
+    })
+
     const columns:ColumnDef<Order>[] =[{
         accessorKey: "id",
         header:({column})=>(<DataTableColumnHeader column={column} title='Order ID' />),
@@ -32,9 +38,14 @@ const Orders = () => {
     },{
         accessorKey: "createdAt",
         header:({column})=>(<DataTableColumnHeader column={column} title='Date' />),
-        cell:({row}) => <div>
-            {row.original.createdAt}
-        </div>
+        cell:({row}) => {
+            const date = new Date(row.original.createdAt as string)
+            const formattedDate = FormattedDate(date)
+            
+            return <div className='text-muted-foreground'>
+                {formattedDate}
+            </div>
+        }
     },{
         accessorKey: "product",
         header:({column})=>(<DataTableColumnHeader column={column} title='Product' />),
@@ -44,9 +55,13 @@ const Orders = () => {
     },{
         accessorKey: "amount",
         header:({column})=>(<DataTableColumnHeader column={column} title='Price' />),
-        cell:({row}) => <div>
-            {row.original.amount}
-        </div>
+        cell:({row}) => {
+            const currency = currencies.data?.find(val => row.original.currency === val.currency)
+
+            return <div>
+                {currency?.label} {row.original.amount}
+            </div>
+        }
     },{
         accessorKey: "recipient",
         header:({column})=>(<DataTableColumnHeader column={column} title='Recipient' />),

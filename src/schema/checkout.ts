@@ -10,12 +10,12 @@ export const RegisterUserCheckoutSchema = z.object({
     password: z.string().min(7, {
         message: "Password must be a more than 8 characters."
     }).max(30).optional().or(z.literal('')),
-    whatsapp: z.string().min(7, {
+    whatsapp: z.string().min(9, {
         message: "Whatsapp number must be a valid phone number."
-    }).max(30),
-    momoNumber: z.string().min(7, {
-        message: "Momo number must be a valid phone number."
-    }).max(30),
+    }),
+    momoName: z.string().min(2, {
+        message: "Name must be a valid name."
+    }),
     notes: z.string().optional()
 })
 

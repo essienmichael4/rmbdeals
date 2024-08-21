@@ -7,6 +7,12 @@ export type Currency = {
     currency: string
 }
 
+export type AnnouncementType = {
+    title?:number,
+    subject:string,
+    show: string
+}
+
 export type AuthType = {
     user:{
         name: string,
@@ -49,7 +55,7 @@ export type Order = {
 
 export type OrderBilling = {
     email: string
-    momoNumber:string
+    momoName:string
     name: string
     notes: string
     whatsapp: string

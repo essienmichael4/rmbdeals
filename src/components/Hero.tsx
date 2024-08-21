@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import hero from '../assets/hero.jpg'
 
-const Hero = () => {
+type Props = {
+  height: number | undefined
+}
+
+const Hero = ({height}:Props) => {
   return (
     <div className='h-screen max-h-[800px] flex items-center justify-between sm:flex-col lg:flex-row'>
         <div className='w-full lg:w-[40%] px-4 lg:px-0 h-full sm:h-[50%] sm:mt-36 flex flex-col justify-end lg:justify-center gap-4 pb-12 lg:pb-0'>
@@ -12,7 +16,7 @@ const Hero = () => {
                 <Link to={"buy"} className='py-3 px-8 rounded-full bg-black text-white'>Buy</Link>
             </div>
         </div>
-        <div className='absolute w-full top-0 left-0 lg:left-20 -z-10 sm:relative sm:rounded-lg lg:rounded-none lg:-right-20 lg:w-[60%] h-full bg-slate-500 flex bg-cover bg-center' style={{backgroundImage:`url(${hero})`}}>
+        <div className={`${height ? `top-${height}` : 'top-0'} absolute w-full left-0 lg:left-20 -z-10 sm:relative sm:rounded-lg lg:rounded-none lg:-right-20 lg:w-[60%] h-full bg-slate-500 flex bg-cover bg-center`} style={{backgroundImage:`url(${hero})`}}>
             <div className="overlay w-full h-full bg-black opacity-30 sm:hidden"></div>
         </div>
     </div>
