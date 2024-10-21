@@ -25,7 +25,7 @@ const HistoryPeriodSelector = ({timeframe, period, setPeriod, setTimeFrame}:Prop
         queryFn: async() => await axios_instance_token.get(`/history-periods`,).then(res => res.data)
     })
     return (
-        <div className='flex items-center gap-4'>
+        <div className='flex items-start md:items-center flex-col md:flex-row gap-4'>
             <Tabs 
                 value={timeframe}
                 onValueChange={value => setTimeFrame(value as Timeframe)}

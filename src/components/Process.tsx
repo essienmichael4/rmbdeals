@@ -28,11 +28,11 @@ const Process = () => {
             </div>
             <div className="w-full sm:w-1/2 lg:border-l lg:border-r lg:w-1/3 sm:px-4 py-2 mb-8">
                 <h5 className="font-bold">CONFIRM SUCCESSFUL TRANSACTION</h5>
-                <p className="mt-4">After successful payment, the currency equivalence will be sent to the recipient within 30min and a receipt will be sent to you.</p>
+                <p className="mt-4">After successful payment, the currency equivalence will be sent to the recipient within 30 minutes and a receipt will be sent to you.</p>
             </div>
             <div className="w-full sm:w-1/2 sm:border-l lg:border-l-0 lg:w-1/3 sm:px-4 py-2 mb-8">
                 <h5 className="font-bold">MANAGE ORDERS</h5>
-                <p className="mt-4">You can manage your orders to delete unproccessed orders or halt transactions when needed. Unprocessed orders wil automatically be cancelled after 48hrs.</p>
+                <p className="mt-4">You can manage your orders to delete unproccessed orders or halt transactions when needed. Unprocessed orders will automatically be cancelled after 48hrs.</p>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { Currency, Order } from '@/lib/types'
+import { Order } from '@/lib/types'
 import { DataTableColumnHeader } from './DataTable/ColumnHeader'
 import { ColumnDef, getCoreRowModel, flexRender, useReactTable } from '@tanstack/react-table'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './ui/table'
@@ -13,20 +13,15 @@ const RecentOrders = () => {
     const axios_instance_token = useAxiosToken()
 
     const orders = useQuery<Order[]>({
-        queryKey: ["summary", "orders"],
+        queryKey: ["summary", "orders", "recent"],
         queryFn: async() => await axios_instance_token.get(`/recent-orders`).then(res => res.data)
-    })
-
-    const currencies = useQuery<Currency[]>({
-        queryKey: ["currencies"],
-        queryFn: async() => await axios_instance_token.get(`/currencies`).then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{
         accessorKey: "id",
         header:({column})=>(<DataTableColumnHeader column={column} title='Order ID' />),
         cell:({row}) => <div>
-            <Link to={`../rmbdeals/orders/${row.original.id}`}>
+            <Link to={`../orders/${row.original.id}`}>
                 <span className='text-gray-400'>#</span>{row.original.id}
             </Link>
         </div>
@@ -51,10 +46,8 @@ const RecentOrders = () => {
         accessorKey: "amount",
         header:({column})=>(<DataTableColumnHeader column={column} title='Price' />),
         cell:({row}) => {
-            const currency = currencies.data?.find(val => row.original.currency === val.currency)
-
             return <div>
-                {currency?.label} {row.original.amount}
+                {row.original.amount}
             </div>
         }
     },{
@@ -89,8 +82,8 @@ const RecentOrders = () => {
     return (
         <div className="my-8 border p-4 rounded-2xl">
             <div className="flex items-center justify-between mb-4">
-                <h4 className="text-3xl">Recent orders</h4>
-                <Link to={'../orders'} className="bg-[rgb(255,221,102)] px-4 py-2 rounded-full">See all</Link>
+                <h4 className="text-lg lg:text-3xl">Recent orders</h4>
+                <Link to={'../orders'} className="text-xs lg:text-sm bg-[rgb(255,221,102)] px-2 lg:px-4 py-1 lg:py-2 rounded-full">See all</Link>
             </div>
             <div className="w-full rounded-md border bg-white/75">
                 <Table>

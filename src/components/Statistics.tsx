@@ -30,11 +30,11 @@ const Statistics = ({from, to}:Props) => {
                 <div className="bg-black text-[#FFDD66] rounded-xl p-4">
                 <ArrowBigDown className="w-12 h-12 mb-4"/>
                 <h4 className="font-bold">Total Expense</h4>
-                <p className="text-3xl">{currency.data?.label} {stats.data?.successfulExpense._sum.amount || 0}</p>
+                <p className="text-3xl"> {stats.data?.successfulExpense || 0}</p>
                 </div>
                 <div className="p-4 text-black">
                 <h4 className=" font-bold">Current Rate</h4>
-                <p className="text-2xl">{currency.data?.label} {currency.data?.rate}</p>
+                <p className="text-2xl">{currency.data?.rate}</p>
                 </div>
             </div>
             </div>
@@ -47,7 +47,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Projected Expense</h4>
-                <p className="text-2xl">{currency.data?.label} {stats.data?.projectedExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{stats.data?.projectedExpense || 0}</p>
                 </div>
             </div>
             </div>
@@ -60,7 +60,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Successful Expense</h4>
-                <p className="text-2xl">{currency.data?.label} {stats.data?.successfulExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{stats.data?.successfulExpense || 0}</p>
                 </div>
             </div>
             </div>
@@ -73,7 +73,7 @@ const Statistics = ({from, to}:Props) => {
                 </div>
                 <div className="p-4 mt-4">
                 <h4 className=" font-bold">Held Expense</h4>
-                <p className="text-2xl">{currency.data?.label} {stats.data?.heldExpense._sum.amount || 0}</p>
+                <p className="text-2xl">{stats.data?.heldExpense || 0}</p>
                 </div>
             </div>
             </div>

@@ -61,6 +61,12 @@ export type OrderBilling = {
     whatsapp: string
 }
 
+
+export type PaymentType = {
+    number:string,
+    name:string
+}
+
 export type User = {
     name: string,
     email: string
@@ -71,21 +77,9 @@ export type Stats = {
     successfulOrders: number,
     heldOrders: number,
     cancelledOrders?: number,
-    projectedExpense: {
-        _sum: {
-            amount: number
-        }
-    },
-    successfulExpense: {
-        _sum: {
-            amount: number
-        }
-    },
-    heldExpense: {
-        _sum: {
-            amount: number
-        }
-    }
+    projectedExpense: number,
+    successfulExpense:number,
+    heldExpense: number
 }
 
 export type Revenue = {
@@ -95,7 +89,5 @@ export type Revenue = {
 
 export type RevenueCurrency = {
     currency: string,
-    _sum: {
-        amount: number
-    }
+    totalRevenue: number
 }

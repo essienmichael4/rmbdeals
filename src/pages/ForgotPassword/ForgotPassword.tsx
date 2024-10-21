@@ -33,7 +33,7 @@ const ForgotPassword = () => {
             
             form.reset()
             setIsPending(false)
-            toast.success(response.data, {
+            toast.success(response.data.message, {
                 id: "forgot"
             })
             
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         <>
             <header className='w-full py-4 border-b absolute z-50'>
                 <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                <Link to={"../"} className='flex gap-2 items-center'>
                     <img src={logo} alt="logo" className='w-8 h-8'/>
                     <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
                 </Link>
@@ -84,7 +84,7 @@ const ForgotPassword = () => {
                                     {!isPending && "Reset Password"}
                                     {isPending && <Loader2 className='animate-spin' /> }
                                 </button>
-                                <Link to={"../rmbdeals/login"} className="flex items-center gap-2 hover:bg-[#FFDD6666] py-2 px-4 text-gray-700 rounded-full"> <ArrowLeft className="w-4 h-4" /> Back to log in</Link>
+                                <Link to={"../login"} className="flex items-center gap-2 hover:bg-[#FFDD6666] py-2 px-4 text-gray-700 rounded-full"> <ArrowLeft className="w-4 h-4" /> Back to log in</Link>
                             </div>
                         </form>
                     </Form>

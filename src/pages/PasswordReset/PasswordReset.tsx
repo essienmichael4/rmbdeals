@@ -1,15 +1,15 @@
 import logo from '@/assets/logo.jpg'
 import { axios_instance } from "@/api/axios"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormDescription } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { ResetPasswordSchema, ResetPasswordSchemaType } from "@/schema/forgotPassword"
 import { zodResolver } from "@hookform/resolvers/zod"
 import axios from "axios"
 import { ArrowLeft, Loader2 } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import { PasswordInput } from '@/components/ui/password-input'
 
 const PasswordReset = () => {
     const navigate = useNavigate()
@@ -23,19 +23,32 @@ const PasswordReset = () => {
         }
     })
 
-    useEffect(()=>{
-        const urlSearchString = window.location.search;
+    // useEffect(()=>{
+        // const urlSearchString = window.location.search;
     
-        const params = new URLSearchParams(urlSearchString);
-        setAccount({id: params?.get('id'), email: params?.get('email')})
-
-        if(account.id === null || account.email === null ){
-            navigate("../rmbdeals/login")
-        }
-      },[])
+        // const params = new URLSearchParams(urlSearchString);
+        // setAccount({id: params?.get('id'), email: params?.get('email')})
+        // console.log(account.id)
+        // console.log(account.email)
+        // if(account.id === null || account.email === null ){
+        //     navigate("../login")
+        // }
+    //   },[])
 
     const onSubmit = async (data:ResetPasswordSchemaType) =>{
         try{
+            const urlSearchString = window.location.search;
+    
+            const params = new URLSearchParams(urlSearchString);
+            setAccount({id: params?.get('id'), email: params?.get('email')})
+
+            if(!account.id || !account.email){
+                toast.error("A token ID and email is needed for this request. Please try resetting your account first.", {
+                    id: "reset"
+                })
+                return
+            }
+
             setIsPending(true)
             toast.loading("Resetting your account password...", {
                 id: "reset"
@@ -47,7 +60,8 @@ const PasswordReset = () => {
             
             form.reset()
             setIsPending(false)
-            toast.success(response.data, {
+            navigate("../login")
+            toast.success(response.data.message, {
                 id: "reset"
             })
             
@@ -65,7 +79,7 @@ const PasswordReset = () => {
         <>
             <header className='w-full py-4 border-b absolute z-50'>
                 <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                <Link to={"../"} className='flex gap-2 items-center'>
                     <img src={logo} alt="logo" className='w-8 h-8'/>
                     <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
                 </Link>
@@ -85,10 +99,10 @@ const PasswordReset = () => {
                                     <FormItem className='flex flex-col mb-8'>
                                         <FormLabel className='text-xs lg:text-sm font-bold'>New Password</FormLabel>
                                         <FormControl>
-                                            <Input 
+                                            <PasswordInput 
                                                 className='py-2 px-2 text-sm rounded border border-slate-200 w-full' 
                                                 placeholder='Please enter your password'
-                                                type='password'{...field} />
+                                                {...field} />
                                         </FormControl>
                                         <FormDescription className="text-xs">Must be at least 8 characters</FormDescription>
                                     </FormItem>
@@ -101,10 +115,10 @@ const PasswordReset = () => {
                                     <FormItem className='flex flex-col mb-8'>
                                         <FormLabel className='text-xs lg:text-sm font-bold'>Confirm New Password</FormLabel>
                                         <FormControl>
-                                            <Input 
+                                            <PasswordInput 
                                                 className='py-2 px-2 text-sm rounded border border-slate-200 w-full' 
                                                 placeholder='Please confirm your password'
-                                                type='password' {...field} />
+                                                {...field} />
                                         </FormControl>
                                         
                                     </FormItem>
@@ -115,7 +129,7 @@ const PasswordReset = () => {
                                     {!isPending && "Reset Password"}
                                     {isPending && <Loader2 className='animate-spin' /> }
                                 </button>
-                                <Link to={"../rmbdeals/login"} className="flex items-center gap-2 hover:bg-[#FFDD6666] py-2 px-4 text-gray-700 rounded-full"> <ArrowLeft className="w-4 h-4" /> Back to log in</Link>
+                                <Link to={"../login"} className="flex items-center gap-2 hover:bg-[#FFDD6666] py-2 px-4 text-gray-700 rounded-full"> <ArrowLeft className="w-4 h-4" /> Back to log in</Link>
                             </div>
                         </form>
                     </Form>

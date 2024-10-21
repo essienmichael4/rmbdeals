@@ -15,7 +15,7 @@ const Announcement = ({setHeight}: Props) => {
         queryKey: ["announcements",],
         queryFn: async() => await axios_instance.get(`/announcements`).then(res => {
             if(res.data){
-                if(res.data.status === "TRUE"){
+                if(res.data.show === "TRUE"){
                     setShow(true)
                 }
             }
@@ -42,7 +42,7 @@ const Announcement = ({setHeight}: Props) => {
               <Megaphone className='text-white'/>
               <h5 className='text-2xl font-bold'>{announcement.data?.title}</h5>
             </div>
-            <p>{announcement.data?.title}</p>
+            <p>{announcement.data?.subject}</p>
             <button onClick={handleShow} className='absolute right-0 top-0'>
               <X />
             </button>

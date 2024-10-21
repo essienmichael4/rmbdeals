@@ -108,7 +108,7 @@ const Checkout = () => {
                 momoName: "",
             })
 
-            navigate("../rmbdeals/dashboard")
+            navigate("../dashboard")
         },
         onError: (err:any) => {
             if (axios.isAxiosError(err)){
@@ -135,27 +135,27 @@ const Checkout = () => {
             <header className={`${!auth && 'py-4'} w-full border-b sticky top-0 z-50 bg-white`}>
                 <nav className={`${!auth && 'py-2'} container px-4 lg:px-0 mx-auto flex justify-between items-center`}>
                     {auth ? 
-                        <Link to={"../rmbdeals/dashboard"} className='flex gap-2 items-center'>
+                        <Link to={"../dashboard"} className='flex gap-2 items-center'>
                             <img src={logo} alt="logo" className='w-8 h-8'/>
                             <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
                         </Link>
                         :
-                        <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                        <Link to={"../"} className='flex gap-2 items-center'>
                             <img src={logo} alt="logo" className='w-8 h-8'/>
                             <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
                         </Link>
                     }
                     {auth && 
                         <div className='hidden lg:flex gap-8 h-full items-center'>
-                            <NavLink to={"../rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
-                            <NavLink to={"../rmbdeals/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
-                            <NavLink to={"../rmbdeals/account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
+                            <NavLink to={"../dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                            <NavLink to={"../orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
+                            <NavLink to={"../account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
                         </div>
                     }
 
                     {auth &&
                         <div className='flex gap-2 md:gap-4 items-center'>
-                            <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"rmbdeals/buy"}>Buy</Link>
+                            <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"buy"}>Buy</Link>
                             <div className="flex items-center">
                                 <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -192,13 +192,13 @@ const Checkout = () => {
                     <div className="fixed right-0 z-20 w-full bg-white p-12 flex flex-col justify-center items-center lg:hidden border-y">
                     <ul>
                         <li className='py-2 text-center'>
-                        <NavLink to={"rmbdeals/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                        <NavLink to={"dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"rmbdeals/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
+                        <NavLink to={"orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"rmbdeals/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
+                        <NavLink to={"account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
                         </li>
                     </ul>
                     
@@ -323,7 +323,7 @@ const Checkout = () => {
                         <div className='w-full lg:w-1/2 lg:px-2'>
                             <div className="w-full border rounded-2xl p-4">
                                 <div className='flex justify-between mb-2'>
-                                    <h5 className='text-xl font-bold'>Your Order</h5>
+                                    <h5 className='text-xl font-bold'>Your Order ID: #{id}</h5>
                                 </div>
                                 <hr />
                                 <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
@@ -370,7 +370,7 @@ const Checkout = () => {
                                 </div>
 
                                 <div className="mb-2 mt-4">
-                                    <h5 className='text-xl font-bold mb-2'>Momo Payment</h5>
+                                    <h5 className='text-xl font-bold mb-2'>Momo Payment Details</h5>
 
                                     <hr />
                                     <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
@@ -382,6 +382,21 @@ const Checkout = () => {
                                             </p>
                                             <p className='text-xs  text-gray-500'>Please use your Order ID as the refrence.</p>
                                         </div>
+                                    </div>
+                                </div>
+
+                                <div className="mb-2 mt-4 gap-4 flex flex-col">
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold tex-sm'>Momo Number</h4>
+                                        <p className='text-xl'>+233 552-771-004</p>
+                                    </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold tex-sm'>Merchant ID <span className='font-normal'>(If using MTN Momo Pay & Pay Bill)</span></h4>
+                                        <p className='text-xl'>725120</p>
+                                    </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold tex-sm'>Merchant Name</h4>
+                                        <p className='text-xl'>CLIXMA TRADING ENTERPRISE</p>
                                     </div>
                                 </div>
 

@@ -171,7 +171,7 @@ const OrderItemAdmin = () => {
                     <div className="flex flex-col mt-4 gap-2">
                         <p className="font-bold">QR code</p>
                         <div className="w-full rounded-2xl overflow-hidden">
-                            <img src={`http://localhost:5000/${order.data?.qrCode}`} className="w-full" alt="" />
+                            <img src={`${order.data?.qrCode}`} className="w-full" alt="" />
                         </div>
                     </div>
 

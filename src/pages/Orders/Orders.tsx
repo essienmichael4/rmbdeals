@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import useAxiosToken from "@/hooks/useAxiosToken"
 import { FormattedDate } from "@/lib/helper"
-import { Currency, Order } from "@/lib/types"
+import { Order } from "@/lib/types"
 import { useQuery } from "@tanstack/react-query"
 import {ColumnDef, SortingState, flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel,getFilteredRowModel, useReactTable, } from "@tanstack/react-table"
 import { useState } from "react"
@@ -20,11 +20,6 @@ const Orders = () => {
     const orders = useQuery<Order[]>({
         queryKey: ["orders"],
         queryFn: async() => await axios_instance_token.get("/orders").then(res => res.data)
-    })
-
-    const currencies = useQuery<Currency[]>({
-        queryKey: ["currencies"],
-        queryFn: async() => await axios_instance_token.get(`/currencies`).then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{
@@ -56,10 +51,8 @@ const Orders = () => {
         accessorKey: "amount",
         header:({column})=>(<DataTableColumnHeader column={column} title='Price' />),
         cell:({row}) => {
-            const currency = currencies.data?.find(val => row.original.currency === val.currency)
-
             return <div>
-                {currency?.label} {row.original.amount}
+                {row.original.amount}
             </div>
         }
     },{

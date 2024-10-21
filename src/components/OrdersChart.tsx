@@ -22,7 +22,7 @@ const OrdersChart = () => {
     
     return (
         <div className='mt-4 p-4 border rounded-2xl bg-white overflow-hidden'>
-            <div className='flex items-center gap-8'>
+            <div className='flex items-start md:items-center flex-col md:flex-row gap-2 md:gap-8'>
                 <h3 className='font-bold text-xl'>History</h3>
 
                 <HistoryPeriodSelector 

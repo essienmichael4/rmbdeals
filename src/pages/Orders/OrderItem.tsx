@@ -16,7 +16,11 @@ const OrderItem = () => {
 
     const order = useQuery<Order>({
         queryKey: ["orders", id],
-        queryFn: async() => await axios_instance_token.get(`/orders/${id}`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/orders/${id}`).then(res => {
+            console.log(res.data);
+            
+            return res.data
+        })
     })
 
     const updateOrder = async (status:string) => {

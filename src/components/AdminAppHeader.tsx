@@ -18,14 +18,14 @@ const AdminInAppHeader = () => {
   return (
     <header className='w-full sticky top-0 border-b bg-white z-50'>
       <nav className="container px-4 py-6 lg:py-0 lg:px-0 mx-auto flex justify-between items-center">
-        <Link to={"../rmbdeals/co/administrator/dashboard"} className='flex gap-2 items-center'>
+        <Link to={"../co/administrator/dashboard"} className='flex gap-2 items-center'>
           <img src={logo} alt="logo" className='w-8 h-8 rounded-full'/>
           <h1 className='text-2xl lg:text-3xl font-bold text-black'>RMB Deals</h1>
         </Link>
         <div className='hidden lg:flex gap-8 h-full items-center'>
-          <NavLink to={"rmbdeals/co/administrator/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
-          <NavLink to={"rmbdeals/co/administrator/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
-          <NavLink to={"rmbdeals/co/administrator/account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
+          <NavLink to={"co/administrator/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
+          <NavLink to={"co/administrator/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
+          <NavLink to={"co/administrator/account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
         </div>
         <div className='flex gap-2 md:gap-4 items-center'>
           <div className="flex items-center">
@@ -60,13 +60,13 @@ const AdminInAppHeader = () => {
         <div className="fixed right-0 z-20 w-full bg-white p-12 flex flex-col justify-center items-center lg:hidden border-y">
           <ul>
             <li className='py-2 text-center'>
-              <NavLink to={"rmbdeals/co/administrator/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
+              <NavLink to={"co/administrator/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
             </li>
             <li className='py-2 text-center'>
-              <NavLink to={"rmbdeals/co/administrator/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
+              <NavLink to={"co/administrator/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
             </li>
             <li className='py-2 text-center'>
-              <NavLink to={"rmbdeals/co/administrator/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
+              <NavLink to={"co/administrator/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
             </li>
           </ul>
           

@@ -18,6 +18,7 @@ import useAuth from '@/hooks/useAuth'
 import axios from 'axios'
 import { Loader2, LogOut, Menu, User, X } from 'lucide-react'
 import useAxiosToken from '@/hooks/useAxiosToken'
+import { Label } from '@/components/ui/label'
 
 const Buy = () => {
     const {auth, setAuth} = useAuth()
@@ -25,6 +26,7 @@ const Buy = () => {
     const navigate = useNavigate()
     const [qrcode, setQrcode] = useState<File | undefined>()
     const [isPending, setIsPending] = useState(false)
+    const [isRMBCalulate, setIsRMBCalulate] = useState(false)
     const [rate, setRate] = useState<number>(0)
     const [amount, setAmount] = useState<number>(0)
     const [rmb, setRMB] = useState<number>(0)
@@ -47,8 +49,14 @@ const Buy = () => {
         form.setValue("currency", value)
         setRate(rate)
         
-        const rmbEquivalence = Number(amount) * rate
-        setRMB(rmbEquivalence)
+        if(isRMBCalulate){
+            const cediEquivalence = Number(rmb) / rate
+            setAmount(cediEquivalence)
+            form.setValue("amount",cediEquivalence)
+        }else{
+            const rmbEquivalence = Number(amount) * rate
+            setRMB(rmbEquivalence)
+        }
     }
 
     const handleAccountChange = useCallback((value:"personal" | "supplier")=>{
@@ -62,9 +70,23 @@ const Buy = () => {
         setRMB(rmbEquivalence)
     }
     
+    const handleRMBInputChange = (value:number)=>{
+        setRMB(value)
+        const amount = value / rate
+        setAmount(amount)
+        form.setValue("amount", amount)
+    }
+
     const handleFileChange = useCallback((value:File | undefined)=>{
         setQrcode(value)
     }, [])
+
+    const handleCalculate = ()=>{
+        setIsRMBCalulate(!isRMBCalulate)
+        form.setValue("amount", 0)
+        setAmount(0)
+        setRMB(0)
+    }
 
     const onSubmit = async (data:OrderSchemaType) =>{
         try{
@@ -98,7 +120,7 @@ const Buy = () => {
                 toast.success(response.data.message, {
                     id: "create-order"
                 })
-                navigate(`../rmbdeals/checkout/${orderId}`)
+                navigate(`../checkout/${orderId}`)
             }else{
                 const response = await axios_instance.post("/orders/nonuser", formData, {
                     headers: {
@@ -112,7 +134,7 @@ const Buy = () => {
                 toast.success(response.data.message, {
                     id: "create-order"
                 })
-                navigate(`../rmbdeals/checkout/${orderId}`)
+                navigate(`../checkout/${orderId}`)
             }
         }catch(err:any){
             console.log(err);
@@ -130,27 +152,27 @@ const Buy = () => {
             <header className={`${!auth && 'py-4'} w-full border-b sticky top-0 z-50 bg-white`}>
                 <nav className={`${!auth && 'py-2'} container px-4 lg:px-0 mx-auto flex justify-between items-center`}>
                     {auth ? 
-                        <Link to={"../rmbdeals/dashboard"} className='flex gap-2 items-center'>
+                        <Link to={"../dashboard"} className='flex gap-2 items-center'>
                             <img src={logo} alt="logo" className='w-8 h-8'/>
                             <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
                         </Link>
                         :
-                        <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                        <Link to={"../"} className='flex gap-2 items-center'>
                             <img src={logo} alt="logo" className='w-8 h-8'/>
                             <h1 className='text-3xl font-bold text-black'>RMB Deals</h1>
                         </Link>
                     }
                     {auth && 
                         <div className='hidden lg:flex gap-8 h-full items-center'>
-                            <NavLink to={"../rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
-                            <NavLink to={"../rmbdeals/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
-                            <NavLink to={"../rmbdeals/account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
+                            <NavLink to={"../dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                            <NavLink to={"../orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
+                            <NavLink to={"../account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
                         </div>
                     }
 
                     {auth &&
                         <div className='flex gap-2 md:gap-4 items-center'>
-                            <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"rmbdeals/buy"}>Buy</Link>
+                            <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"/buy"}>Buy</Link>
                             <div className="flex items-center">
                                 <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -181,7 +203,7 @@ const Buy = () => {
                     }
                     {!auth &&
                         <div className='flex gap-4 lg:gap-8'>
-                            <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/login"}>Login</Link>
+                            <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../login"}>Login</Link>
                         </div>
                     }
                 </nav>
@@ -189,13 +211,13 @@ const Buy = () => {
                     <div className="fixed right-0 z-20 w-full bg-white p-12 flex flex-col justify-center items-center lg:hidden border-y">
                     <ul>
                         <li className='py-2 text-center'>
-                        <NavLink to={"rmbdeals/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
+                        <NavLink to={"/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"rmbdeals/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
+                        <NavLink to={"/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
                         </li>
                         <li className='py-2 text-center'>
-                        <NavLink to={"rmbdeals/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
+                        <NavLink to={"/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
                         </li>
                     </ul>
                     
@@ -212,7 +234,7 @@ const Buy = () => {
                         <div className="w-full lg:w-1/2 mx-auto border rounded-2xl mt-8 p-4">
                             <div className='flex justify-between mb-2'>
                                 <h5 className='text-xl font-bold'>Order Details</h5>
-
+                                <button type='button' onClick={handleCalculate} className={`${isRMBCalulate && 'bg-black text-white'} text-xs p-2 border rounded-sm`}>RMB to Cedis</button>
                             </div>
                             <hr />
                             <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
@@ -221,11 +243,16 @@ const Buy = () => {
                                     <p className='text-xs 2xl:text-sm font-bold'>Current Rate</p>
                                     <p className='text-xl'>{rate}</p>
                                 </div>
+                                
+                                {isRMBCalulate && <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
+                                    <p className='text-xs 2xl:text-sm font-bold'>GHS Equivalence</p>
+                                    <p className='text-xl'>¢ {amount.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:3})}</p>
+                                </div>}
 
-                                <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
+                                {!isRMBCalulate && <div className='border flex flex-1 gap-2 flex-col items-start justify-center p-2 border-gray-300 rounded-lg'>
                                     <p className='text-xs 2xl:text-sm font-bold'>RMB Equivalence</p>
-                                    <p className='text-xl'>¥ {rmb.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:8})}</p>
-                                </div>
+                                    <p className='text-xl'>¥ {rmb.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:3})}</p>
+                                </div>}
                             </div>
                             <div className='mt-4 flex items-center gap-4 w-full'>
 
@@ -257,20 +284,26 @@ const Buy = () => {
                                     )} 
                                 />
                             </div>
-                            <div className='flex mt-2 gap-2 items-center flex-wrap'>
+
+                            {!isRMBCalulate && <div className='flex mt-2 gap-2 items-center flex-wrap'>
                                 <FormField 
                                     control={form.control}
                                     name="amount"
                                     render={() =>(
                                         <FormItem className='w-full'>
-                                            <FormLabel className='text-xs 2xl:text-sm font-bold'>Transacted Amount</FormLabel>
+                                            <FormLabel className='text-xs 2xl:text-sm font-bold'>Transacted Amount {isRMBCalulate ? "¥" : "¢"}</FormLabel>
                                             <FormControl>
                                                 <Input type='number' min={0} placeholder='0' onChange={(e)=>handleInputChange(Number(e.target.value))}/>
                                             </FormControl>
                                         </FormItem>
                                     )} 
                                 />
-                            </div>
+                            </div>}
+
+                            {isRMBCalulate && <div className='flex mt-2 gap-2 items-center flex-wrap'>
+                                <Label className='text-xs 2xl:text-sm font-bold'>Transacted Amount {isRMBCalulate ? "¥" : "¢"}</Label>
+                                <Input type='number' min={0} placeholder='0' onChange={(e)=>handleRMBInputChange(Number(e.target.value))}/>
+                            </div>}
 
                             <div className="mb-2 mt-4">
                                 <h5 className='text-xl font-bold'>Recipient Details</h5>

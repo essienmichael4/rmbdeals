@@ -13,6 +13,7 @@ import { axios_instance } from '@/api/axios'
 import { Loader2 } from 'lucide-react'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
 
 const Login = () => {
     const {setAuth} = useAuth()
@@ -46,9 +47,9 @@ const Login = () => {
             })
             
             if(response.data?.user.role === "ADMIN"){
-                navigate("/rmbdeals/co/administrator/dashboard", {replace:true})
+                navigate("/co/administrator/dashboard", {replace:true})
             }else{
-                navigate("/rmbdeals/dashboard", {replace:true})
+                navigate("/dashboard", {replace:true})
             }
         }catch(err:any){
             setIsPending(false)
@@ -64,13 +65,13 @@ const Login = () => {
     <>
         <header className='w-full py-4 border-b absolute z-50'>
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                <Link to={"../"} className='flex gap-2 items-center'>
                     <img src={logo} alt="logo" className='w-8 h-8 rounded-full'/>
                     <h1 className='text-2xl lg:text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
                 </Link>
                 <div className='flex gap-4 lg:gap-8'>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../rmbdeals/buy"}>Buy</Link>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/register"}>Register</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-xs lg:text-sm font-medium text-white bg-black' to={"../buy"}>Buy</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-xs lg:text-sm font-medium bg-[#FFDD66]' to={"../register"}>Register</Link>
                 </div>
             </nav>
         </header>
@@ -104,10 +105,10 @@ const Login = () => {
                                     <FormItem className='flex flex-col gap-2 mb-1'>
                                         <FormLabel className='text-xs lg:text-sm font-bold'>Password</FormLabel>
                                         <FormControl>
-                                            <Input 
+                                            <PasswordInput 
                                                 className='py-2 px-2 text-sm rounded border border-slate-200 w-full' 
                                                 placeholder='Please enter your password'
-                                                type='password' {...field} />
+                                                {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -115,7 +116,7 @@ const Login = () => {
 
                             <div className='flex justify-between mt-1 mb-4'>
                                 <p className='text-xs 2xl:text-sm text-gray-300 mb-0'>Minimum 8 characters</p>
-                                <Link to={'../rmbdeals/forgot-password'} className='text-blue-400 text-xs 2xl:text-sm'>forgot password</Link>
+                                <Link to={'../forgot-password'} className='text-blue-400 text-xs 2xl:text-sm'>forgot password</Link>
                             </div>
                             <button className='rounded-full flex items-center justify-center bg-blue-300 w-full text-white py-2 hover:bg-blue-500' disabled={isPending}> 
                                 {!isPending && "Login"}
@@ -123,7 +124,7 @@ const Login = () => {
                             </button>
                             <div className='flex gap-2 mb-3 mt-2'>
                                 <p className='text-gray-400 text-xs 2xl:text-sm'>Don't have an account?</p>
-                                <Link to={"../rmbdeals/register"} className='text-xs 2xl:text-sm text-blue-300'>Register</Link>
+                                <Link to={"../register"} className='text-xs 2xl:text-sm text-blue-300'>Register</Link>
                             </div>
                         </form>
                     </Form>

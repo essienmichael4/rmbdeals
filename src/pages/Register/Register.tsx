@@ -13,12 +13,13 @@ import { Loader2 } from 'lucide-react'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { RegisterSchemaType, RegisterSchema } from '@/schema/register'
+import { PasswordInput } from '@/components/ui/password-input'
 
 const Register = () => {
     const {setAuth} = useAuth()
     const [isPending, setIsPending] = useState(false)
     const navigate = useNavigate()
-    const from = "/rmbdeals/wizard"
+    const from = "../wizard"
     const form = useForm<RegisterSchemaType>({
         resolver: zodResolver(RegisterSchema),
         defaultValues:{
@@ -65,13 +66,13 @@ const Register = () => {
     <>
         <header className='w-full py-4 border-b absolute z-50'>
             <nav className="container px-4 lg:px-0 mx-auto flex justify-between items-center py-2">
-                <Link to={"../rmbdeals"} className='flex gap-2 items-center'>
+                <Link to={"../"} className='flex gap-2 items-center'>
                     <img src={logo} alt="logo" className='w-8 h-8 rounded-full '/>
                     <h1 className='text-2xl lg:text-3xl font-bold text-white sm:text-black'>RMB Deals</h1>
                 </Link>
                 <div className='flex gap-4 lg:gap-8'>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"../rmbdeals/buy"}>Buy</Link>
-                    <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium bg-[#FFDD66]' to={"../rmbdeals/login"}>Login</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-xs lg:text-sm font-medium text-white bg-black' to={"../buy"}>Buy</Link>
+                    <Link className='py-2 px-4 lg:px-6 rounded-full text-xs lg:text-sm font-medium bg-[#FFDD66]' to={"../login"}>Login</Link>
                 </div>
             </nav>
         </header>
@@ -120,10 +121,10 @@ const Register = () => {
                                     <FormItem className='flex flex-col 2xl:gap-2 mb-1'>
                                         <FormLabel className='text-xs 2xl:text-sm font-bold'>Password</FormLabel>
                                         <FormControl>
-                                            <Input 
+                                            <PasswordInput 
                                                 className='py-1 px-2 text-xs 2xl:text-sm rounded border border-slate-200 w-full' 
                                                 placeholder='Please enter your password' {...field} 
-                                                type='password'/>
+                                            />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -139,10 +140,10 @@ const Register = () => {
                                     <FormItem className='form-control flex flex-col 2xl:gap-2 mb-2 2xl:mb-3'>
                                         <FormLabel className='text-xs 2xl:text-sm font-bold'>Confirm Password</FormLabel>
                                         <FormControl>
-                                            <Input 
+                                            <PasswordInput 
                                                 className='py-1 px-2 text-xs 2xl:text-sm rounded border border-slate-200 w-full' 
                                                 placeholder='Please confirm your password'
-                                                type='password' {...field} />
+                                                 {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )}
@@ -153,7 +154,7 @@ const Register = () => {
                             </button>
                             <div className='flex gap-2 lg:mb-3 mt-2'>
                                 <p className='text-gray-400 text-xs 2xl:text-sm'>Already have an account?</p>
-                                <Link to={"../rmbdeals/login"} className='text-xs 2xl:text-sm text-blue-300'>Login</Link>
+                                <Link to={"../login"} className='text-xs 2xl:text-sm text-blue-300'>Login</Link>
                             </div>
                         </form>
                     </Form>

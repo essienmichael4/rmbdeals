@@ -18,7 +18,7 @@ import { toast } from 'sonner'
 const Wizard = () => {
     const navigate = useNavigate()
     const axios_instance_token = useAxiosToken()
-    const from = "/rmbdeals/dashboard"
+    const from = "../dashboard"
     const {auth} = useAuth()
     const form = useForm<SetUserCurrencySchemaType>({
         resolver:zodResolver(SetUserCurrencySchema),

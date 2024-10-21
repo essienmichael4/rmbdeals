@@ -18,17 +18,17 @@ const InAppHeader = () => {
   return (
     <header className='w-full sticky top-0 border-b bg-white z-50'>
       <nav className="container px-4 py-8 lg:py-0 lg:px-0 mx-auto flex justify-between items-center">
-        <Link to={"../rmbdeals/dashboard"} className='flex gap-2 items-center'>
+        <Link to={"../dashboard"} className='flex gap-2 items-center'>
             <img src={logo} alt="logo" className='w-8 h-8 rounded-full'/>
             <h1 className='text-2xl lg:text-3xl font-bold text-black'>RMB Deals</h1>
           </Link>
         <div className='hidden lg:flex gap-8 h-full items-center'>
-          <NavLink to={"rmbdeals/dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
-          <NavLink to={"rmbdeals/orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
-          <NavLink to={"rmbdeals/account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
+          <NavLink to={"dashboard"} className={`inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]`}>Dashboard</NavLink>
+          <NavLink to={"orders"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Orders</NavLink>
+          <NavLink to={"account"} className='inline-block py-10 text-gray-500 border-b-4 border-white hover:text-[#FFDD66]'>Account</NavLink>
         </div>
         <div className='flex gap-2 md:gap-4 items-center'>
-          <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"rmbdeals/buy"}>Buy</Link>
+          <Link className='py-2 px-4 lg:px-6 rounded-full text-md font-medium text-white bg-black' to={"buy"}>Buy</Link>
           <div className="flex items-center">
                 <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -61,13 +61,13 @@ const InAppHeader = () => {
         <div className="fixed right-0 z-20 w-full bg-white p-12 flex flex-col justify-center items-center lg:hidden border-y">
           <ul>
             <li className='py-2 text-center'>
-              <NavLink to={"rmbdeals/dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
+              <NavLink to={"dashboard"} className={`text-gray-500 hover:text-[#FFDD66]`}>Dashboard</NavLink>
             </li>
             <li className='py-2 text-center'>
-              <NavLink to={"rmbdeals/orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
+              <NavLink to={"orders"} className='text-gray-500 hover:text-[#FFDD66]'>Orders</NavLink>
             </li>
             <li className='py-2 text-center'>
-              <NavLink to={"rmbdeals/account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
+              <NavLink to={"account"} className='text-gray-500 hover:text-[#FFDD66]'>Account</NavLink>
             </li>
           </ul>
           

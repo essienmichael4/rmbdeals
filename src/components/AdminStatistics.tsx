@@ -1,7 +1,7 @@
 import useAxiosToken from '@/hooks/useAxiosToken'
 import { Currency, Revenue, RevenueCurrency, Stats } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
-import { ArrowBigDown, Plus } from 'lucide-react'
+import { ArrowBigDown, Edit, Plus } from 'lucide-react'
 import UpdateCurrency from './UpdateCurrency'
 import AddCurrency from './AddCurrency'
 
@@ -15,7 +15,10 @@ const AdminStatistics = ({from, to}:Props) => {
 
     const stats = useQuery<Stats>({
         queryKey: ["summary-admin", from, to],
-        queryFn: async() => await axios_instance_token.get(`/statistics-admin?from=${from}&to=${to}`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/statistics-admin?from=${from}&to=${to}`).then(res => {
+            console.log(res.data);
+            
+            return res.data})
     })
 
     const currencies = useQuery<Currency[]>({
@@ -26,6 +29,8 @@ const AdminStatistics = ({from, to}:Props) => {
     const revenue = useQuery<Revenue>({
         queryKey: ["revenue", from, to],
         queryFn: async() => await axios_instance_token.get(`/orders-admin/revenue?from=${from}&to=${to}`).then(res => {
+            console.log(res.data);
+            
             return res.data
         })
     })
@@ -40,7 +45,7 @@ const AdminStatistics = ({from, to}:Props) => {
                                 <h4 className="font-bold text-2xl">Current Rates</h4>
                                 <div className='flex items-center gap-2'> 
                                     <UpdateCurrency trigger={
-                                        <button className=' bg-black rounded-full p-2 hover:bg-black/70'><Plus className='text-white' /></button>
+                                        <button className=' bg-black rounded-full p-2 hover:bg-black/70'><Edit className='text-white' /></button>
                                     } />
                                     
                                     <AddCurrency trigger={
@@ -53,9 +58,9 @@ const AdminStatistics = ({from, to}:Props) => {
                                 {currencies.data?.map((currency:Currency)=>{
                                     return (
                                         <div key={currency.currency} className='flex items-center justify-between'>
-                                            <h5 className='text-lg'>{currency.description}</h5>
-                                            <div className='flex gap-2'>
-                                                <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency.label}</div>
+                                            {/* <h5 className='text-lg'>{currency.description}</h5> */}
+                                            <div className='flex gap-2 w-full'>
+                                                <div className='w-8 h-8 flex flex-1 justify-center text-sm lg:text-lg items-center bg-emerald-300 rounded-sm'>{currency.label}</div>
                                                 <div className='flex items-center justify-center text-lg px-2 bg-black text-white rounded-sm'>{currency.rate}</div>
                                             </div>
                                         </div>
@@ -74,13 +79,13 @@ const AdminStatistics = ({from, to}:Props) => {
                             <div className='mt-4 flex flex-col gap-4'>
                                 {
                                     revenue.data?.completedRevenue.map((revenue:RevenueCurrency, i:number) =>{
-                                        const currency = currencies.data?.find(val => revenue.currency === val.currency)
+                                        // const currency = currencies.data?.find(val => revenue.currency === val.currency)
                                         return (
                                             <div key={i} className='flex items-center justify-between'>
                                                 <h5 className='text-lg'>{revenue.currency}</h5>
                                                 <div className='flex gap-2'>
-                                                    <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency?.label}</div>
-                                                    <div className='flex items-center justify-center text-lg px-2 bg-black text-white rounded-sm'>{revenue._sum.amount}</div>
+                                                    {/* <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency?.label}</div> */}
+                                                    <div className='flex items-center justify-center text-lg px-2 bg-black text-white rounded-sm'>{revenue.totalRevenue.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</div>
                                                 </div>
                                             </div>
                                         )
@@ -99,13 +104,13 @@ const AdminStatistics = ({from, to}:Props) => {
                             <div className='mt-4 flex flex-col gap-4'>
                                 {
                                     revenue.data?.heldRevenue.map((revenue:RevenueCurrency, i:number) =>{
-                                        const currency = currencies.data?.find(val => revenue.currency === val.currency)
+                                        // const currency = currencies.data?.find(val => revenue.currency === val.currency)
                                         return (
                                             <div key={i} className='flex items-center justify-between'>
                                                 <h5 className='text-lg text-white'>{revenue.currency}</h5>
                                                 <div className='flex gap-2'>
-                                                    <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency?.label}</div>
-                                                    <div className='flex items-center justify-center text-lg px-2 bg-white text-black rounded-sm'>{revenue._sum.amount}</div>
+                                                    {/* <div className='w-8 h-8 flex justify-center text-lg items-center bg-emerald-300 rounded-sm'>{currency?.label}</div> */}
+                                                    <div className='flex items-center justify-center text-lg px-2 bg-white text-black rounded-sm'>{revenue?.totalRevenue.toLocaleString("en-US", { maximumFractionDigits: 2, minimumFractionDigits: 2 })}</div>
                                                 </div>
                                             </div>
                                         )
@@ -123,7 +128,7 @@ const AdminStatistics = ({from, to}:Props) => {
                         <div className="bg-black text-[#FFDD66] rounded-xl p-4">
                         <ArrowBigDown className="w-10 h-10 mb-4"/>
                         <h4 className="font-bold text-sm">Total Revenue</h4>
-                        <p className="text-xl">{stats.data?.successfulExpense._sum.amount || 0}</p>
+                        <p className="text-xl">{stats.data?.successfulExpense || 0}</p>
                         </div>
                         <div className="p-4 text-black">
                         <h4 className=" font-bold text-sm">Cancelled Orders</h4>
@@ -140,7 +145,7 @@ const AdminStatistics = ({from, to}:Props) => {
                         </div>
                         <div className="p-4 mt-2">
                             <h4 className="font-bold text-sm">Projected Revenue</h4>
-                            <p className="text-lg">{stats.data?.projectedExpense._sum.amount || 0}</p>
+                            <p className="text-lg">{stats.data?.projectedExpense || 0}</p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +158,7 @@ const AdminStatistics = ({from, to}:Props) => {
                         </div>
                         <div className="p-4 mt-2">
                             <h4 className=" font-bold text-sm">Successful Revenue</h4>
-                            <p className="text-lg">{stats.data?.successfulExpense._sum.amount || 0}</p>
+                            <p className="text-lg">{stats.data?.successfulExpense || 0}</p>
                         </div>
                     </div>
                 </div>
@@ -166,7 +171,7 @@ const AdminStatistics = ({from, to}:Props) => {
                         </div>
                         <div className="p-4 mt-2">
                             <h4 className="font-bold text-sm">Held Revenue</h4>
-                            <p className="text-lg">{stats.data?.heldExpense._sum.amount || 0}</p>
+                            <p className="text-lg">{stats.data?.heldExpense || 0}</p>
                         </div>
                     </div>
                 </div>

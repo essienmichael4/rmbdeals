@@ -30,36 +30,36 @@ function App() {
       <Routes>
         {/* User Routes */}
         <Route element={<Whatsapp />}>
-          <Route path='/rmbdeals' element={<Home />} />
-          <Route path='rmbdeals/buy' element={<Buy />} />
-          <Route path='rmbdeals/checkout/:id' element={<Checkout />} />
-          <Route path='rmbdeals/login' element={<Login />} />
-          <Route path='rmbdeals/forgot-password' element={<ForgotPassword />} />
-          <Route path='rmbdeals/reset-password' element={<PasswordReset />} />
-          <Route path='rmbdeals/register' element={<Register />} />
+          <Route path='/' element={<Home />} />
+          <Route path='buy' element={<Buy />} />
+          <Route path='checkout/:id' element={<Checkout />} />
+          <Route path='login' element={<Login />} />
+          <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='reset-password' element={<PasswordReset />} />
+          <Route path='register' element={<Register />} />
 
           {/* User Protected Routes */}
           <Route element={<RequireAuth allowedRole='USER'/>}>
             <Route element={<Layout />}>
-              <Route path='rmbdeals/dashboard' element={<Dashboard />} />
-              <Route path='rmbdeals/orders' element={<Orders />} />
-              <Route path='rmbdeals/orders/:id' element={<OrderItem />} />
-              <Route path='rmbdeals/account' element={<Account />} />
-              <Route path='rmbdeals/wizard' element={<Wizard />} />
+              <Route path='dashboard' element={<Dashboard />} />
+              <Route path='orders' element={<Orders />} />
+              <Route path='orders/:id' element={<OrderItem />} />
+              <Route path='account' element={<Account />} />
+              <Route path='wizard' element={<Wizard />} />
             </Route> 
           </Route> 
         </Route>
 
         {/* Admin Routes */}
-        <Route path='rmbdeals/co/administrator' element={<AdminLogin />} />
+        <Route path='co/administrator' element={<AdminLogin />} />
 
         {/* Admin Protected Route */}
         <Route element={<RequireAuth allowedRole='ADMIN'/>}>
           <Route element={<AdminLayout />}>
-            <Route path='rmbdeals/co/administrator/dashboard' element={<AdminDashboard />} />
-            <Route path='rmbdeals/co/administrator/orders' element={<OrdersAdmin />} />
-            <Route path='rmbdeals/co/administrator/orders/:id' element={<OrderItemAdmin />} />
-            <Route path='rmbdeals/co/administrator/account' element={<AdminAccount />} />
+            <Route path='co/administrator/dashboard' element={<AdminDashboard />} />
+            <Route path='co/administrator/orders' element={<OrdersAdmin />} />
+            <Route path='co/administrator/orders/:id' element={<OrderItemAdmin />} />
+            <Route path='co/administrator/account' element={<AdminAccount />} />
           </Route>
         </Route>
 

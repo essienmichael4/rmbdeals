@@ -1,36 +1,36 @@
-import { useState } from 'react'
 import { Dialog, DialogTitle, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { UserPasswordUpdateSchema, UserPasswordUpdateSchemaType } from '@/schema/user'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import useAxiosToken from '@/hooks/useAxiosToken'
-import { PasswordInput } from '@/components/ui/password-input'
+import { useState } from 'react'
+import { AddPaymentAccountSchema, AddPaymentAccountSchemaType } from '@/schema/payment'
 
 interface Props{
     trigger?: React.ReactNode,
 }
 
-const ChangePassword = ({trigger}:Props) => {
+const AddPaymentAccount = ({trigger}:Props) => {
     const [open, setOpen] = useState(false)
     const axios_instance_token = useAxiosToken()
+    const queryClient = useQueryClient()
 
-    const form = useForm<UserPasswordUpdateSchemaType>({
-        resolver:zodResolver(UserPasswordUpdateSchema),
+    const form = useForm<AddPaymentAccountSchemaType>({
+        resolver:zodResolver(AddPaymentAccountSchema),
         defaultValues:{
-            currentPassword: "",
-            confirmPassword: "",
-            newPassword: ""
+            name: "",
+            number: "",
         }
     })
 
-    const updatePassword = async (data:UserPasswordUpdateSchemaType)=>{
-        const response = await axios_instance_token.put(`/users/password`, {
+    const addAnnouncement = async (data:AddPaymentAccountSchemaType)=>{
+        const response = await axios_instance_token.post(`/accounts`, {
             ...data
         },)
 
@@ -38,35 +38,36 @@ const ChangePassword = ({trigger}:Props) => {
     }
 
     const {mutate, isPending} = useMutation({
-        mutationFn: updatePassword,
+        mutationFn: addAnnouncement,
         onSuccess: ()=>{
-            toast.success("Password update successful", {
-                id: "password-update"
+            toast.success("Payment account added successfully", {
+                id: "add-account"
             })
 
+            queryClient.invalidateQueries({queryKey: ["accounts"]})
+
             form.reset({
-                currentPassword: "",
-                newPassword: "",
-                confirmPassword: ""
+                name: "",
+                number: ""
             })
 
             setOpen(prev => !prev)
         },onError: (err:any) => {
             if (axios.isAxiosError(err)){
                 toast.error(err?.response?.data?.error, {
-                    id: "password-update"
+                    id: "add-account"
                 })
             }else{
                 toast.error(`Something went wrong`, {
-                    id: "password-update"
+                    id: "add-account"
                 })
             }
         }
     })
 
-    const onSubmit = (data:UserPasswordUpdateSchemaType)=>{
-        toast.loading("Updating account password...", {
-            id: "password-update"
+    const onSubmit = (data:AddPaymentAccountSchemaType)=>{
+        toast.loading("Adding payment account...", {
+            id: "add-account"
         })
         mutate(data)
     }
@@ -77,19 +78,19 @@ const ChangePassword = ({trigger}:Props) => {
             <DialogContent className='w-[90%] mx-auto rounded-2xl'>
                 <DialogHeader className='items-start'>
                     <DialogTitle>
-                        Change Password
+                        Add Account
                     </DialogTitle>
                 </DialogHeader>
                 <Form {...form}>
                     <form className='space-y-2'>
                             <FormField
                                 control={form.control}
-                                name="currentPassword"
+                                name="number"
                                 render={({field}) =>(
                                     <FormItem className='flex-1'>
-                                        <FormLabel className='text-xs'>Current Password</FormLabel>
+                                        <FormLabel className='text-xs'>Account Number</FormLabel>
                                         <FormControl>
-                                            <PasswordInput {...field} />
+                                            <Input {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )} 
@@ -97,24 +98,12 @@ const ChangePassword = ({trigger}:Props) => {
 
                         <FormField 
                             control={form.control}
-                            name="newPassword"
+                            name="name"
                             render={({field}) =>(
                                 <FormItem>
-                                    <FormLabel className='text-xs'>New Password</FormLabel>
+                                    <FormLabel className='text-xs'>Merchant Name</FormLabel>
                                     <FormControl>
-                                        <PasswordInput {...field} />
-                                    </FormControl>
-                                </FormItem>
-                            )} 
-                        />
-                        <FormField 
-                            control={form.control}
-                            name="confirmPassword"
-                            render={({field}) =>(
-                                <FormItem>
-                                    <FormLabel className='text-xs'>Confirm New Password</FormLabel>
-                                    <FormControl>
-                                        <PasswordInput {...field} />
+                                        <Input {...field} />
                                     </FormControl>
                                 </FormItem>
                             )} 
@@ -134,7 +123,7 @@ const ChangePassword = ({trigger}:Props) => {
                     </DialogClose>
                     <Button onClick={form.handleSubmit(onSubmit)} disabled={isPending} className='bg-[#47C9D1] hover:bg-[#106981]'
                     >
-                        {!isPending && "Create Customer"}
+                        {!isPending && "Add Payment Account"}
                         {isPending && <Loader2 className='animate-spin' /> }
                     </Button>
                 </DialogFooter>
@@ -143,4 +132,4 @@ const ChangePassword = ({trigger}:Props) => {
     )
 }
 
-export default ChangePassword
+export default AddPaymentAccount

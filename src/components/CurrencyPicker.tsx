@@ -99,7 +99,7 @@ const CurrencyPicker = ({ onChange, rate, setRate }:Props) => {
 function CurrencyRow({currency}:{currency:Currency}){
     return (
         <div className="flex items-center gap-2">
-            <span>{currency.label} {currency.currency}</span>
+            <span>{currency.currency}</span>
         </div>
     )
 }

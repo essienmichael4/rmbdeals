@@ -3,7 +3,6 @@ import { Dialog, DialogTitle, DialogClose, DialogContent, DialogFooter, DialogHe
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '../../components/ui/form'
-import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
 import { UserPasswordUpdateSchema, UserPasswordUpdateSchemaType } from '@/schema/user'
 import { useMutation } from '@tanstack/react-query'
@@ -11,6 +10,7 @@ import { toast } from 'sonner'
 import axios from 'axios'
 import { Loader2 } from 'lucide-react'
 import useAxiosToken from '@/hooks/useAxiosToken'
+import { PasswordInput } from '@/components/ui/password-input'
 
 interface Props{
     trigger?: React.ReactNode,
@@ -89,7 +89,7 @@ const ChangePassword = ({trigger}:Props) => {
                                     <FormItem className='flex-1'>
                                         <FormLabel className='text-xs'>Current Password</FormLabel>
                                         <FormControl>
-                                            <Input {...field} />
+                                            <PasswordInput {...field} />
                                         </FormControl>
                                     </FormItem>
                                 )} 
@@ -102,7 +102,7 @@ const ChangePassword = ({trigger}:Props) => {
                                 <FormItem>
                                     <FormLabel className='text-xs'>New Password</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <PasswordInput {...field} />
                                     </FormControl>
                                 </FormItem>
                             )} 
@@ -114,7 +114,7 @@ const ChangePassword = ({trigger}:Props) => {
                                 <FormItem>
                                     <FormLabel className='text-xs'>Confirm New Password</FormLabel>
                                     <FormControl>
-                                        <Input {...field} />
+                                        <PasswordInput {...field} />
                                     </FormControl>
                                 </FormItem>
                             )} 

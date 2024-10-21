@@ -17,13 +17,13 @@ const Faqs = () => {
         <div className="lg:p-8 mt-8 lg:mt-0">
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1" className="md:py-8">
-                    <AccordionTrigger className="md:text-xl">How Do I Know You Is Not A Scam?</AccordionTrigger>
+                    <AccordionTrigger className="md:text-xl">How Do I Know It Is Not A Scam?</AccordionTrigger>
                     <AccordionContent >
-                        You can visit our office at Accra Tabora Junction to make payment. Call 0244699112 for direction.
+                        You can visit our office at Accra, Tabora Junction to make payment. Call 0244699112 for direction.
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-2" className="md:py-8">
-                    <AccordionTrigger className="md:text-xl">Which type of Accounts Can you fund?</AccordionTrigger>
+                    <AccordionTrigger className="md:text-xl">Which Type Of Accounts Can You Fund?</AccordionTrigger>
                     <AccordionContent>
                         We can pay into Alipay, or Chinese Bank Accounts.
                     </AccordionContent>
@@ -31,17 +31,17 @@ const Faqs = () => {
                 <AccordionItem value="item-3" className="md:py-8">
                     <AccordionTrigger className="md:text-xl">How Fast Can You Fund My Account?</AccordionTrigger>
                     <AccordionContent>
-                        RmbDeals.com can transfer as fast as 5 minutes within normal China working Hours but we estimate up to 30 minutes. 
+                        RMB Deals can transfer as fast as 5 minutes within normal Chinese working Hours but we estimate up to 30 minutes. 
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-4" className="md:py-8">
-                    <AccordionTrigger className="md:text-xl">Where is Your Office Located?</AccordionTrigger>
+                    <AccordionTrigger className="md:text-xl">Where Is Our Office Located?</AccordionTrigger>
                     <AccordionContent>
-                        We are located at Accra 18 Nii Okaiman West Road, GW-1190-6993 Off Tabora Junction - Alaji road close to Pinkberry Tabora branch. 
+                        We are located at Accra, 18 Nii Okaiman West Road, GW-1190-6993 Off Tabora Junction - Alaji road close to Pinkberry, Tabora branch. 
                     </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value="item-5" className="md:py-8 ">
-                    <AccordionTrigger className="md:text-xl">What is Your Rate?</AccordionTrigger>
+                    <AccordionTrigger className="md:text-xl">What Is Our Rate?</AccordionTrigger>
                     <AccordionContent>
                         Our rate is updated daily on the front page of this site. 
                         You can negotiate for all transactions above 10,000RMB.
