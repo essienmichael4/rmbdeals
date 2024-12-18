@@ -103,6 +103,14 @@ const Buy = () => {
                 return
             }
 
+            if(data.amount < 100){
+                setIsPending(false)
+                toast.error("The transacted amount so lower than the minimum amount needed to make transactions. Minimum transacted amount is Gh¢ 100.", {
+                    id: "create-order"
+                })
+                return
+            }
+
             const formData = new FormData()
             formData.append("qrcode", qrcode)
             formData.append("order", JSON.stringify(data))

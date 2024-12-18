@@ -83,7 +83,7 @@ const AdminRecentOrders = () => {
         <div className="my-8 border p-4 rounded-2xl">
             <div className="flex items-center justify-between mb-4">
                 <h4 className="text-lg lg:text-3xl">Recent orders</h4>
-                <Link to={'../orders'} className="text-xs lg:text-sm bg-[rgb(255,221,102)] px-2 lg:px-4 py-1 lg:py-2 rounded-full">See all</Link>
+                <Link to={'../co/administrator/orders'} className="text-xs lg:text-sm bg-[rgb(255,221,102)] px-2 lg:px-4 py-1 lg:py-2 rounded-full">See all</Link>
             </div>
             <div className="w-full rounded-md border bg-white/75">
                 <Table>
