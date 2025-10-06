@@ -30,9 +30,9 @@ const Checkout = () => {
         resolver:zodResolver(RegisterUserCheckoutSchema),
         defaultValues:{
             password:"",
-            name: auth ? auth.user.name : "",
+            name: auth ? auth.name : "",
             notes: "",
-            email: auth ? auth.user.email : "",
+            email: auth ? auth.email : "",
             whatsapp: "",
             momoName: "",
         }
@@ -77,7 +77,7 @@ const Checkout = () => {
 
             return response.data
         }else{
-            const response = await axios_instance.post(`/orders/checkout-register/${id}`, {
+            const response = await axios_instance.post(`/orders/checkout/register/${id}`, {
                 name: data.name,
                 email: data.email,
                 momoName: data.momoName,
@@ -86,7 +86,7 @@ const Checkout = () => {
                 password: data.password
             })
 
-            setAuth({user: response.data.user, backendTokens: response.data.backendTokens})
+            setAuth(response.data.user)
 
             return response.data
         }
@@ -101,9 +101,9 @@ const Checkout = () => {
 
             form.reset({
                 password:"",
-                name: auth ? auth.user.name : "",
+                name: auth ? auth.name : "",
                 notes: "",
-                email: auth ? auth.user.email : "",
+                email: auth ? auth.email : "",
                 whatsapp: "",
                 momoName: "",
             })
@@ -323,7 +323,7 @@ const Checkout = () => {
                         <div className='w-full lg:w-1/2 lg:px-2'>
                             <div className="w-full border rounded-2xl p-4">
                                 <div className='flex justify-between mb-2'>
-                                    <h5 className='text-xl font-bold'>Your Order ID: #{id}</h5>
+                                    <h5 className='text-xl font-bold'>Your Order ID: {id}</h5>
                                 </div>
                                 <hr />
                                 <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
@@ -370,7 +370,7 @@ const Checkout = () => {
                                 </div>
 
                                 <div className="mb-2 mt-4">
-                                    <h5 className='text-xl font-bold mb-2'>Momo Payment Details</h5>
+                                    <h5 className='text-xl font-bold mb-2'>Momo/Bank Payment Details</h5>
 
                                     <hr />
                                     <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
@@ -378,25 +378,61 @@ const Checkout = () => {
                                         <span className='text-red-500 mr-2 text-3xl'>&#9888;</span>
                                         <div>
                                             <p className='text-xs  text-gray-500'>
-                                                Make your payment directly into our momo account. 
+                                                Make your payment directly into our momo or bank account. 
                                             </p>
                                             <p className='text-xs  text-gray-500'>Please use your Order ID as the refrence.</p>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="mb-2 mt-4 gap-4 flex flex-col">
+                                <div className="mb-2 mt-4 gap-2 flex flex-col">
                                     <div className='flex flex-col gap-1'>
-                                        <h4 className='font-bold tex-sm'>Momo Number</h4>
-                                        <p className='text-xl'>+233 552-771-004</p>
+                                        <h4 className='font-bold text-xs'>Momo Number</h4>
+                                        <p className='text-sm'>+233 552-771-004</p>
                                     </div>
                                     <div className='flex flex-col gap-1'>
-                                        <h4 className='font-bold tex-sm'>Merchant ID <span className='font-normal'>(If using MTN Momo Pay & Pay Bill)</span></h4>
-                                        <p className='text-xl'>725120</p>
+                                        <h4 className='font-bold text-xs'>Merchant ID <span className='font-normal'>(If using MTN Momo Pay & Pay Bill)</span></h4>
+                                        <p className='text-sm'>725120</p>
                                     </div>
                                     <div className='flex flex-col gap-1'>
-                                        <h4 className='font-bold tex-sm'>Merchant Name</h4>
-                                        <p className='text-xl'>CLIXMA TRADING ENTERPRISE</p>
+                                        <h4 className='font-bold text-xs'>Merchant Name</h4>
+                                        <p className='text-sm'>CLIXMA TRADING ENTERPRISE</p>
+                                    </div>
+                                </div>
+                                
+                                <hr />
+                                <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
+
+                                <div className="mb-2 mt-4 gap-2 flex flex-col">
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold text-xs'>Bank Name</h4>
+                                        <p className='text-sm'>GCB PLC</p>
+                                    </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold text-xs'>Account Number</h4>
+                                        <p className='text-sm'>1391180001895</p>
+                                    </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold text-xs'>Account Name</h4>
+                                        <p className='text-sm'>CLIXMA TRADING</p>
+                                    </div>
+                                </div>
+                                
+                                <hr />
+                                <div className='h-1 w-36 relative block bg-[#FFDD66] -top-1'></div>
+
+                                <div className="mb-2 mt-4 gap-2 flex flex-col">
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold text-xs'>Bank Name</h4>
+                                        <p className='text-sm'>ECOBANK GHANA</p>
+                                    </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold text-xs'>Account Number</h4>
+                                        <p className='text-sm'>1441004848212</p>
+                                    </div>
+                                    <div className='flex flex-col gap-1'>
+                                        <h4 className='font-bold text-xs'>Account Name</h4>
+                                        <p className='text-sm'>CLIXMA TRADING</p>
                                     </div>
                                 </div>
 

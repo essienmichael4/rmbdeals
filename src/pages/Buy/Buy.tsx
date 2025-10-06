@@ -103,9 +103,17 @@ const Buy = () => {
                 return
             }
 
-            if(data.amount < 100){
+            if(data.amount < 200){
                 setIsPending(false)
-                toast.error("The transacted amount so lower than the minimum amount needed to make transactions. Minimum transacted amount is Gh¢ 100.", {
+                toast.error("The transacted amount so lower than the minimum amount needed to make transactions. Minimum transacted amount is Gh¢ 200.", {
+                    id: "create-order"
+                })
+                return
+            }
+
+            if(amount < 200){
+                setIsPending(false)
+                toast.error("The transacted amount so lower than the minimum amount needed to make transactions. Minimum transacted amount is Gh¢ 200.", {
                     id: "create-order"
                 })
                 return
@@ -113,7 +121,10 @@ const Buy = () => {
 
             const formData = new FormData()
             formData.append("qrcode", qrcode)
-            formData.append("order", JSON.stringify(data))
+            formData.append("account", data.account);                // string or UUID
+            formData.append("amount", String(data.amount));          // must be string when using FormData
+            formData.append("currency", data.currency);              // e.g., "USD"
+            formData.append("recipient", data.recipient);            // string
 
             if(auth){
                 const response = await axios_instance_token.post("/orders", formData, {
@@ -122,7 +133,7 @@ const Buy = () => {
                     }
                 })
                 form.reset()
-                const orderId:number = response.data.order.id
+                const orderId:number = response.data.id
 
                 setIsPending(false)
                 toast.success(response.data.message, {
@@ -135,8 +146,7 @@ const Buy = () => {
                       "content-type": "multipart/form-data",
                     }
                 })
-                
-                const orderId:number = response.data.order.id
+                const orderId:number = response.data.id
                 form.reset()
                 setIsPending(false)
                 toast.success(response.data.message, {
@@ -303,14 +313,16 @@ const Buy = () => {
                                             <FormControl>
                                                 <Input type='number' min={0} placeholder='0' onChange={(e)=>handleInputChange(Number(e.target.value))}/>
                                             </FormControl>
+                                            <FormDescription className='text-red-500'>Minimum amount for transactions is GH¢ 200.00</FormDescription>
                                         </FormItem>
                                     )} 
                                 />
                             </div>}
 
-                            {isRMBCalulate && <div className='flex mt-2 gap-2 items-center flex-wrap'>
+                            {isRMBCalulate && <div className='flex flex-col w-full mt-2 gap-2 items-strat flex-wrap'>
                                 <Label className='text-xs 2xl:text-sm font-bold'>Transacted Amount {isRMBCalulate ? "¥" : "¢"}</Label>
-                                <Input type='number' min={0} placeholder='0' onChange={(e)=>handleRMBInputChange(Number(e.target.value))}/>
+                                <Input type='number' className='w-full' min={0} placeholder='0' onChange={(e)=>handleRMBInputChange(Number(e.target.value))}/>
+                                <FormDescription className='text-red-500'>Minimum amount for transactions is GH¢ 200.00</FormDescription>
                             </div>}
 
                             <div className="mb-2 mt-4">

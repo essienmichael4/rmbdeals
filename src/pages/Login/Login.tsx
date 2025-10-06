@@ -46,7 +46,7 @@ const Login = () => {
                 id: "login"
             })
             
-            if(response.data?.user.role === "ADMIN"){
+            if(response.data?.role === "ADMIN"){
                 navigate("/co/administrator/dashboard", {replace:true})
             }else{
                 navigate("/dashboard", {replace:true})

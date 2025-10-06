@@ -30,7 +30,7 @@ const ChangePassword = ({trigger}:Props) => {
     })
 
     const updatePassword = async (data:UserPasswordUpdateSchemaType)=>{
-        const response = await axios_instance_token.put(`/users/password`, {
+        const response = await axios_instance_token.patch(`/users/password`, {
             ...data
         },)
 

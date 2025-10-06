@@ -16,12 +16,14 @@ const OrderItemAdmin = () => {
 
     const order = useQuery<Order>({
         queryKey: ["orders-admin", id],
-        queryFn: async() => await axios_instance_token.get(`/orders-admin/${id}`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/orders/admin/${id}`).then(res => res.data)
     })
 
     const updateOrder = async (status:string) => {
-        const response = await axios_instance_token.put(`/orders-admin/${id}`, {
-            status
+        console.log({status});
+        
+        const response = await axios_instance_token.patch(`/orders/admin/${id}`, {
+            status: status
         },)
 
         return response.data

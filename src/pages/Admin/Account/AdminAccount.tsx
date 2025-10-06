@@ -3,10 +3,10 @@ import ChangePassword from "./ChangePassword"
 import EditAccountDialog from "./EditAccountDialog"
 import useAuth from "@/hooks/useAuth"
 import AddAdminUser from "./AddAdminUser"
-import { Loader2, PlusCircle } from "lucide-react"
+import { Download, Loader2, PlusCircle } from "lucide-react"
 import AddAnnouncement from "./AddAnnouncement"
 import EditAnnouncement from "./EditAnnouncement"
-import { AnnouncementType, PaymentType } from "@/lib/types"
+import { AnnouncementType, Client, PaymentType } from "@/lib/types"
 import { axios_instance } from "@/api/axios"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
@@ -14,11 +14,30 @@ import useAxiosToken from "@/hooks/useAxiosToken"
 import axios from "axios"
 import AddPaymentAccount from "./AddPaymentAccount"
 import EditPaymentAccount from "./EditPaymentAccount"
+import * as XLSX from "xlsx"
 
 const AdminAccount = () => {
   const {auth} = useAuth()
   const axios_instance_token = useAxiosToken()
   const queryClient = useQueryClient()
+
+  const { data: clients, isLoading } = useQuery<Client[]>({
+    queryKey: ["clients", "export"],
+    queryFn: async () => {
+      const res = await axios_instance_token.get(`/users/clients/export`);
+      return res.data;
+    },
+  });
+
+  const onClick = () => {
+    if (!clients) return;
+    
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(clients);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Clients");
+    XLSX.writeFile(wb, "clients.xlsx");
+  };
 
   const announcement = useQuery<AnnouncementType>({
     queryKey: ["announcements",],
@@ -31,7 +50,7 @@ const AdminAccount = () => {
   })
 
   const upadateAnnouncementStatus = async (data:string)=>{
-    const response = await axios_instance_token.put(`/announcements/1/show`, {
+    const response = await axios_instance_token.patch(`/announcements/1/show`, {
         status: data
     },)
 
@@ -76,6 +95,10 @@ const onUpdate = (data:string)=>{
             <p className="text-xs text-gray-400 mb-2">Manage your account settings.</p>
           </div>
           <div className=" flex items-center justify-end gap-2 flex-wrap">
+            <button
+                onClick={onClick}
+                disabled={isLoading}
+                className="flex gap-2 text-gray-500 py-2 px-4 rounded-md border hover:border-gray-600 hover:text-gray-800"><Download className="w-4 h-4"/> <span className="text-nowrap text-sm">Export Clients</span></button>
             <EditAccountDialog trigger={
               <Button className="border border-purple-700 text-purple-700 hover:bg-purple-700 hover:text-white bg-transparent">Edit Profile</Button>} />
             <ChangePassword trigger={
@@ -91,8 +114,8 @@ const onUpdate = (data:string)=>{
           </div>
           <div className='px-4 pt-4 pb-8'>
             <div className='absolute w-36 h-36 rounded-full bg-white border-4 border-gray-200 top-16 left-4'></div>
-            <h3 className="font-bold text-4xl">{auth?.user.name}</h3>
-            <p className="mt-2 text-muted-foreground">{auth?.user.email}</p>
+            <h3 className="font-bold text-4xl">{auth?.name}</h3>
+            <p className="mt-2 text-muted-foreground">{auth?.email}</p>
             <div className='flex flex-wrap gap-8'></div>
           </div>
         </div>

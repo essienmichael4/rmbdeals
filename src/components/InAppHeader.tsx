@@ -1,13 +1,13 @@
 import { LogOut, Menu, User, X } from 'lucide-react'
 import logo from '../assets/logo.jpg'
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,  DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from './ui/button'
 import useAuth from '@/hooks/useAuth'
 
 const InAppHeader = () => {
-
+  const navigate = useNavigate()
   const {setAuth} = useAuth()
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false)
 
@@ -37,7 +37,7 @@ const InAppHeader = () => {
                 <DropdownMenuContent className="w-56">
                     <DropdownMenuLabel>My Account</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={()=>{navigate(`../account`)}}>
                         <User className="mr-2 h-4 w-4" />
                         <span>Profile</span>
                         <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>

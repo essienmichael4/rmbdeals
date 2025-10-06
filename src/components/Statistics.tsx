@@ -18,7 +18,7 @@ const Statistics = ({from, to}:Props) => {
 
     const stats = useQuery<Stats>({
         queryKey: ["summary", from, to],
-        queryFn: async() => await axios_instance_token.get(`/statistics?from=${from}&to=${to}`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/stats?from=${from}&to=${to}`).then(res => res.data)
     })
 
     

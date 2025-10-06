@@ -22,7 +22,7 @@ const HistoryPeriodSelector = ({timeframe, period, setPeriod, setTimeFrame}:Prop
 
     const historyPeriodsQuery = useQuery<number[]>({
         queryKey: ["summary", "history", "periods"],
-        queryFn: async() => await axios_instance_token.get(`/history-periods`,).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/stats/history-periods`,).then(res => res.data)
     })
     return (
         <div className='flex items-start md:items-center flex-col md:flex-row gap-4'>

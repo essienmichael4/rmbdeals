@@ -14,7 +14,9 @@ const useRefreshToken = () => {
 
         setAuth(prev =>{
             const auth:AuthType = {
-                user:prev!.user, 
+                name: prev?.name as string, 
+                email: prev?.email as string, 
+                role: prev?.role,
                 backendTokens: {
                     accessToken: response.data?.accessToken,
                     refreshToken: prev!.backendTokens.refreshToken

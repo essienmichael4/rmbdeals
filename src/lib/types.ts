@@ -14,11 +14,9 @@ export type AnnouncementType = {
 }
 
 export type AuthType = {
-    user:{
-        name: string,
-        email: string,
-        role?: string
-    },
+    name: string,
+    email: string,
+    role?: string,
     backendTokens: {
         accessToken: string,
         refreshToken: string
@@ -28,6 +26,15 @@ export type AuthType = {
 export type AuthContextType = {
     auth: AuthType | undefined,
     setAuth: Dispatch<SetStateAction<AuthType | undefined>>;
+}
+
+export type Client = {
+    id: number,
+    name?: string,
+    email: string,
+    phone?: string,
+    createdAt?: string,
+    updatedAt?:string,
 }
 
 export type HistoryResponseType = {

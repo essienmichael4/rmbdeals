@@ -28,8 +28,8 @@ const Account = () => {
           </div>
           <div className='px-4 pt-4 pb-8'>
             <div className='absolute w-36 h-36 rounded-full bg-white border-4 border-gray-200 top-16 left-4'></div>
-            <h3 className="font-bold text- text-4xl">{auth?.user.name}</h3>
-            <p className="mt-2 text-gray-500">{auth?.user.email}</p>
+            <h3 className="font-bold text- text-4xl">{auth?.name}</h3>
+            <p className="mt-2 text-gray-500">{auth?.email}</p>
             <div className='flex flex-wrap gap-8'></div>
           </div>
         </div>

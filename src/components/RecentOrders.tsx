@@ -14,7 +14,7 @@ const RecentOrders = () => {
 
     const orders = useQuery<Order[]>({
         queryKey: ["summary", "orders", "recent"],
-        queryFn: async() => await axios_instance_token.get(`/recent-orders`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/stats/recent-orders`).then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{

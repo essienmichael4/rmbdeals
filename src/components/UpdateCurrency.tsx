@@ -33,7 +33,9 @@ const UpdateCurrency = ({trigger}:Props) => {
     })
 
     const updateCurrency = async (data:UpdateCurrencySchemaType)=>{
-        const response = await axios_instance_token.put(`/currencies/${id}`, {
+        console.log(data);
+        
+        const response = await axios_instance_token.patch(`/currencies/${id}`, {
             ...data
         },)
 

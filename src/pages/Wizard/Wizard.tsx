@@ -28,7 +28,7 @@ const Wizard = () => {
     })
 
     const setUpCurrency = async (data:SetUserCurrencySchemaType) => {
-        const response = await axios_instance_token.put(`/users/currency`, {
+        const response = await axios_instance_token.patch(`/users/currency`, {
             currency: data.currency
         },)
 
@@ -71,7 +71,7 @@ const Wizard = () => {
     return (<div className='container flex mx-auto w-full items-center justify-between'>
             <div className='flex mx-auto max-w-2xl flex-col items-center justify-between gap-4'>
                 <div>
-                    <h1 className='text-center text-3xl'> Welcome, <span className='ml-2 font-bold'>{auth?.user.name}</span></h1>
+                    <h1 className='text-center text-3xl'> Welcome, <span className='ml-2 font-bold'>{auth?.name}</span></h1>
                     <h2 className="text-center mt-4 text-base text-muted-foreground">Let &apos;s get started by setting up your currency</h2>
                     <h3 className="text-center text-sm text-muted-foreground mt-2">You can change this settings at any time</h3>
                 </div>

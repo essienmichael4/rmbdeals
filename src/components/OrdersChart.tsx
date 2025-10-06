@@ -15,7 +15,7 @@ const OrdersChart = () => {
     
     const historyDataQuery = useQuery<[]>({
         queryKey: ["summary", "history", timeframe, period],
-        queryFn: async() => await axios_instance_token.get(`/history-data?timeframe=${timeframe}&month=${period.month}&year=${period.year}`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/stats/history-data?timeframe=${timeframe}&month=${period.month}&year=${period.year}`).then(res => res.data)
     })
 
     const dataAvailable = historyDataQuery.data && historyDataQuery.data.length > 0

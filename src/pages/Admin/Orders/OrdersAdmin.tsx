@@ -19,7 +19,7 @@ const OrdersAdmin = () => {
 
     const orders = useQuery<Order[]>({
         queryKey: ["orders-admin"],
-        queryFn: async() => await axios_instance_token.get("/orders-admin").then(res => res.data)
+        queryFn: async() => await axios_instance_token.get("/orders/admin").then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{

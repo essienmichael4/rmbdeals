@@ -31,7 +31,7 @@ const EditAnnouncement = ({trigger}:Props) => {
     })
 
     const editAnnouncement = async (data:EditAnnouncementSchemaType)=>{
-        const response = await axios_instance_token.put(`/announcements/1`, {
+        const response = await axios_instance_token.patch(`/announcements/1`, {
             ...data
         },)
 

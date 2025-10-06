@@ -14,7 +14,7 @@ const AdminRecentOrders = () => {
 
     const orders = useQuery<Order[]>({
         queryKey: ["summary-admin", "orders"],
-        queryFn: async() => await axios_instance_token.get(`/recent-orders-admin`).then(res => res.data)
+        queryFn: async() => await axios_instance_token.get(`/stats/recent-orders-admin`).then(res => res.data)
     })
 
     const columns:ColumnDef<Order>[] =[{

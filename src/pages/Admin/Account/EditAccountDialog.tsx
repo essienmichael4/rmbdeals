@@ -31,8 +31,9 @@ const EditAccountDialog = ({trigger}:Props) => {
     })
 
     const updateUser = async (data:UserUpdateSchemaType)=>{
-        const response = await axios_instance_token.put(`/users/account`, {
-            ...data
+        const response = await axios_instance_token.patch(`/users/account`, {
+            ...data,
+            role: "ADMIN"
         },)
 
         return response.data

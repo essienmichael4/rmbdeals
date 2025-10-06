@@ -15,7 +15,7 @@ const AdminStatistics = ({from, to}:Props) => {
 
     const stats = useQuery<Stats>({
         queryKey: ["summary-admin", from, to],
-        queryFn: async() => await axios_instance_token.get(`/statistics-admin?from=${from}&to=${to}`).then(res => {
+        queryFn: async() => await axios_instance_token.get(`/stats/statistics-admin?from=${from}&to=${to}`).then(res => {
             console.log(res.data);
             
             return res.data})
@@ -28,7 +28,7 @@ const AdminStatistics = ({from, to}:Props) => {
     
     const revenue = useQuery<Revenue>({
         queryKey: ["revenue", from, to],
-        queryFn: async() => await axios_instance_token.get(`/orders-admin/revenue?from=${from}&to=${to}`).then(res => {
+        queryFn: async() => await axios_instance_token.get(`/orders/admin/revenue?from=${from}&to=${to}`).then(res => {
             console.log(res.data);
             
             return res.data

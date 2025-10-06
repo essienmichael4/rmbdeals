@@ -30,7 +30,7 @@ const EditPaymentAccount = ({trigger}:Props) => {
     })
 
     const editAnnouncement = async (data:EditPaymentAccountSchemaType)=>{
-        const response = await axios_instance_token.put(`/accounts`, {
+        const response = await axios_instance_token.patch(`/accounts`, {
             ...data
         },)
 
